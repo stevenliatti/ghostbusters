@@ -56,7 +56,7 @@
 							<tool command="arm-none-eabi-gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="com.crt.advproject.link.exe.debug.539946703" name="MCU Linker" superClass="com.crt.advproject.link.exe.debug">
 								<option id="com.crt.advproject.link.arch.1188932394" name="Architecture" superClass="com.crt.advproject.link.arch" value="com.crt.advproject.link.target.cm3" valueType="enumerated"/>
 								<option id="com.crt.advproject.link.thumb.880718650" name="Thumb mode" superClass="com.crt.advproject.link.thumb" value="true" valueType="boolean"/>
-								<option id="com.crt.advproject.link.script.230425977" name="Linker script" superClass="com.crt.advproject.link.script" value="&quot;TP1_ghostbuster_Debug.ld&quot;" valueType="string"/>
+								<option id="com.crt.advproject.link.script.230425977" name="Linker script" superClass="com.crt.advproject.link.script" value="&quot;ghostbuster_2_Debug.ld&quot;" valueType="string"/>
 								<option id="com.crt.advproject.link.manage.798320364" name="Manage linker script" superClass="com.crt.advproject.link.manage" value="true" valueType="boolean"/>
 								<option id="gnu.c.link.option.nostdlibs.766477309" name="No startup or default libs (-nostdlib)" superClass="gnu.c.link.option.nostdlibs" value="true" valueType="boolean"/>
 								<option id="gnu.c.link.option.other.442238479" name="Other options (-Xlinker [option])" superClass="gnu.c.link.option.other" valueType="stringList">
@@ -146,7 +146,7 @@
 							<tool id="com.crt.advproject.link.exe.release.575860282" name="MCU Linker" superClass="com.crt.advproject.link.exe.release">
 								<option id="com.crt.advproject.link.arch.1354382116" name="Architecture" superClass="com.crt.advproject.link.arch" value="com.crt.advproject.link.target.cm3" valueType="enumerated"/>
 								<option id="com.crt.advproject.link.thumb.1774848315" name="Thumb mode" superClass="com.crt.advproject.link.thumb" value="true" valueType="boolean"/>
-								<option id="com.crt.advproject.link.script.1242159919" name="Linker script" superClass="com.crt.advproject.link.script" value="&quot;TP1_ghostbuster_Release.ld&quot;" valueType="string"/>
+								<option id="com.crt.advproject.link.script.1242159919" name="Linker script" superClass="com.crt.advproject.link.script" value="&quot;ghostbuster_2_Release.ld&quot;" valueType="string"/>
 								<option id="com.crt.advproject.link.manage.1035341187" name="Manage linker script" superClass="com.crt.advproject.link.manage" value="true" valueType="boolean"/>
 								<option id="gnu.c.link.option.nostdlibs.383809744" name="No startup or default libs (-nostdlib)" superClass="gnu.c.link.option.nostdlibs" value="true" valueType="boolean"/>
 								<option id="gnu.c.link.option.other.1967530262" name="Other options (-Xlinker [option])" superClass="gnu.c.link.option.other" valueType="stringList">
