@@ -30,6 +30,7 @@
 .settings
 Debug
 makefile
+.cproject
 
 #Mac
 .DS_Store
