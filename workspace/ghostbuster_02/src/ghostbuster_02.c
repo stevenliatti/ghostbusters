@@ -17,29 +17,12 @@
 #include "fonts.h"
 #include "traces_ref.h"
 #include "custom_rand.h"
+#include "object.h"
 
 
 #define NO_COLLISION 0
 #define GHOST_NB     5
 #define STEP         2			// moving step for all objects
-
-// Direction vector. Note that only 8 directions are possible,
-// since NORTH|SOUTH is nonsense for example.
-enum {
-	NORTH=1,
-	EAST=2,
-	SOUTH=4,
-	WEST=8
-};
-
-// structure containing object position, size and direction
-typedef struct {
-	int x;
-	int y;
-	int radius;
-	int dir;
-	bool active;
-} object_t;
 
 // object instances:  object[0] is the ball, the other objects are the ghosts
 object_t object[GHOST_NB+1];
@@ -88,7 +71,20 @@ int test_collision(int object_id, object_t *obj_array, int min_idx, int max_idx)
 	return NO_COLLISION;
 }
 
-
+void ball(void *arg) {
+	while(1) {
+		int x = object[0].x;
+		int y = object[0].y;
+		lcd_filled_circle(object[0].x, object[0].y, object[0].radius, LCD_WHITE);
+		move_object(&object[0]);
+		if (left_collision(&object[0])) object[0].dir ^= (WEST | EAST);
+		if (right_collision(&object[0])) object[0].dir ^= (WEST | EAST);
+		if (up_collision(&object[0])) object[0].dir ^= (NORTH | SOUTH);
+		if (down_collision(&object[0])) object[0].dir ^= (NORTH | SOUTH);
+		vTaskDelay(10 / portTICK_RATE_MS);
+		lcd_filled_circle(x, y, object[0].radius, LCD_BLACK);
+	}
+}
 
 int main(void)
 {
@@ -103,6 +99,12 @@ int main(void)
 	lcd_print(85, 100, SMALLFONT, LCD_WHITE, LCD_BLACK, "Have fun!");
 	display_bitmap16(ghost_im_left[0], 110, 150, ghost_width, ghost_height);
 
+	object[0] = init_object(237, 299, 2, NORTH | WEST, true);
+
+	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
+		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
+		NULL)!=pdPASS) return 0;
+	vTaskStartScheduler();
 	while(1);
 	return 1;
 }
