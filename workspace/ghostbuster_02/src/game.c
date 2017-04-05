@@ -9,8 +9,6 @@
 
 #include "game.h"
 
-static bool start = false;
-
 void display_menu(void) {
 	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, "Lives: ");
 }

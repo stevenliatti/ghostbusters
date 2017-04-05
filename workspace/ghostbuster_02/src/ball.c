@@ -8,7 +8,8 @@
 #include "ball.h"
 
 void ball(void *arg) {
-	while(1) {
+	while(!start) vTaskDelay(10 / portTICK_RATE_MS);
+	while(start) {
 		int x = object[0].x;
 		int y = object[0].y;
 		lcd_filled_circle(object[0].x, object[0].y, object[0].radius, LCD_WHITE);

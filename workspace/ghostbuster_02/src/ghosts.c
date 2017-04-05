@@ -1,5 +1,8 @@
 #include "game.h"
 
+// pointers on the ghosts bitmaps. 2 images by ghost direction.
+__DATA(RAM2) uint16_t *ghost_im_left[2], *ghost_im_right[2], *ghost_im_center[2];
+
 int ghost_x(int ghost_id) {
 	return 10 + ghost_id * 30;
 }
