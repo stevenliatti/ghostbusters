@@ -92,6 +92,34 @@ void ball(void *arg) {
 	}
 }
 
+int ghost_x(int ghost_id) {
+	return 10 + ghost_id * 30;
+}
+
+int display_ghosts() {
+	if ((ghost_im_left[0]=read_bmp_file("ghost_l1.bmp", &ghost_width, &ghost_height))==NULL)
+		return -1;
+	if ((ghost_im_left[1]=read_bmp_file("ghost_l2.bmp", &ghost_width, &ghost_height))==NULL)
+		return -1;
+	if ((ghost_im_center[0]=read_bmp_file("ghost_c1.bmp", &ghost_width, &ghost_height))==NULL)
+		return -1;
+	if ((ghost_im_center[1]=read_bmp_file("ghost_c2.bmp", &ghost_width, &ghost_height))==NULL)
+		return -1;
+	if ((ghost_im_right[0]=read_bmp_file("ghost_r1.bmp", &ghost_width, &ghost_height))==NULL)
+		return -1;
+	if ((ghost_im_right[1]=read_bmp_file("ghost_r2.bmp", &ghost_width, &ghost_height))==NULL)
+		return -1;
+
+	int y = 150;
+
+	display_bitmap16(ghost_im_left[0], ghost_x(0), y, ghost_width, ghost_height);
+	display_bitmap16(ghost_im_left[1], ghost_x(1), y, ghost_width, ghost_height);
+	display_bitmap16(ghost_im_center[0], ghost_x(2), y, ghost_width, ghost_height);
+	display_bitmap16(ghost_im_center[1], ghost_x(3), y, ghost_width, ghost_height);
+	display_bitmap16(ghost_im_right[0], ghost_x(4), y, ghost_width, ghost_height);
+	display_bitmap16(ghost_im_right[1], ghost_x(5), y, ghost_width, ghost_height);
+}
+
 int main(void)
 {
 	init_rnd32(1);
@@ -99,18 +127,15 @@ int main(void)
 	clear_screen(LCD_BLACK);
 	init_traces(115200, 1, true);		// to be removed if you implement your own traces
 
-	if ((ghost_im_left[0]=read_bmp_file("ghost_l1.bmp", &ghost_width, &ghost_height))==NULL)
-		return -1;
-
 	lcd_print(85, 100, SMALLFONT, LCD_WHITE, LCD_BLACK, "Have fun!");
-	display_bitmap16(ghost_im_left[0], 110, 150, ghost_width, ghost_height);
 	display_menu();
+	display_ghosts();
 
 	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
 
-	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
-		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
-		NULL)!=pdPASS) return 0;
+//	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
+//			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
+//			NULL)!=pdPASS) return 0;
 	vTaskStartScheduler();
 	while(1);
 	return 1;
