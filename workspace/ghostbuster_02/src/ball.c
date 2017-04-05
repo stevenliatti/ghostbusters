@@ -41,6 +41,7 @@ void ball_task(void *arg) {
 				lives--;
 				display_menu();
 				init_ball();
+				ball->active = true;
 				if (lives == 0) {
 					lives = 3;
 					ball->active = false;
