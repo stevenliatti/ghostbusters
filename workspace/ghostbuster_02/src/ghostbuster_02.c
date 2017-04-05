@@ -19,10 +19,9 @@
 #include "custom_rand.h"
 #include "object.h"
 
-
-#define NO_COLLISION 0
-#define GHOST_NB     5
-#define STEP         2			// moving step for all objects
+#define NO_COLLISION	0
+#define GHOST_NB 		5
+#define BALL_SIZE		3
 
 // object instances:  object[0] is the ball, the other objects are the ghosts
 object_t object[GHOST_NB+1];
@@ -31,6 +30,9 @@ __DATA(RAM2) uint16_t *ghost_im_left[2], *ghost_im_right[2], *ghost_im_center[2]
 uint16_t ghost_width, ghost_height;
 // racket instance
 racket_t racket;
+
+uint8_t lives = 3;
+uint32_t score = 0;
 
 
 /* The function looks at the collision only in the direction taken by the object referenced as "object_id".
@@ -73,16 +75,20 @@ int test_collision(int object_id, object_t *obj_array, int min_idx, int max_idx)
 	return NO_COLLISION;
 }
 
+void display_menu(void) {
+	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, "Lives: ");
+}
+
 void ball(void *arg) {
 	while(1) {
 		int x = object[0].x;
 		int y = object[0].y;
 		lcd_filled_circle(object[0].x, object[0].y, object[0].radius, LCD_WHITE);
-		move_object(&object[0]);
 		if (left_collision(&object[0])) object[0].dir ^= (WEST | EAST);
 		if (right_collision(&object[0])) object[0].dir ^= (WEST | EAST);
 		if (up_collision(&object[0])) object[0].dir ^= (NORTH | SOUTH);
 		if (down_collision(&object[0])) object[0].dir ^= (NORTH | SOUTH);
+		move_object(&object[0]);
 		vTaskDelay(10 / portTICK_RATE_MS);
 		lcd_filled_circle(x, y, object[0].radius, LCD_BLACK);
 	}
@@ -100,8 +106,9 @@ int main(void)
 
 	lcd_print(85, 100, SMALLFONT, LCD_WHITE, LCD_BLACK, "Have fun!");
 	display_bitmap16(ghost_im_left[0], 110, 150, ghost_width, ghost_height);
+	display_menu();
 
-	object[0] = init_object(237, 299, 2, NORTH | WEST, true);
+	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
 
 	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
