@@ -99,6 +99,7 @@ int main(void)
 	lcd_print(85, 100, SMALLFONT, LCD_WHITE, LCD_BLACK, "Have fun!");
 
 	display_ghosts();
+	init_game();
 
 	while(1);
 	return 1;
