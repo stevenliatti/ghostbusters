@@ -20,7 +20,7 @@ void check_start(uint8_t joystick_pos) {
 }
 
 void game_task(void *arg) {
-	while (!start) {
+	while (1) {
 		joystick_handler(check_start, TRIGGER);
 		vTaskDelay(10 / portTICK_RATE_MS);
 	}

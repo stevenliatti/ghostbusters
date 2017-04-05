@@ -117,10 +117,6 @@ int main(void)
 	display_ghosts();
 	init_game();
 
-	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
-		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
-		NULL)!=pdPASS) return 0;
-
 	racket = init_racket(110, 299, 30, 4, 00, true);
 
 	if (xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
