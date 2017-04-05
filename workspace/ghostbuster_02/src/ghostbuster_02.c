@@ -17,7 +17,12 @@
 #include "fonts.h"
 #include "traces_ref.h"
 #include "custom_rand.h"
+
+// personal libraries
 #include "object.h"
+#include "racket.h"
+#include "gpio.h"
+#include "utils.h"
 
 #define NO_COLLISION	0
 #define GHOST_NB 		5
@@ -28,8 +33,11 @@ object_t object[GHOST_NB+1];
 // pointers on the ghosts bitmaps. 2 images by ghost direction.
 __DATA(RAM2) uint16_t *ghost_im_left[2], *ghost_im_right[2], *ghost_im_center[2];
 uint16_t ghost_width, ghost_height;
+// racket instance
+racket_t racket;
 
-uint8_t lives = 3;
+bool start = false;
+uint8_t lives = 0;
 uint32_t score = 0;
 
 
@@ -75,6 +83,10 @@ int test_collision(int object_id, object_t *obj_array, int min_idx, int max_idx)
 
 void display_menu(void) {
 	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, "Lives: ");
+}
+
+void check_start(uint8_t joystick_pos) {
+	if (joystick_pos == CENTER) start = true;
 }
 
 void ball(void *arg) {
@@ -131,6 +143,10 @@ int main(void)
 	display_menu();
 	display_ghosts();
 
+	while (!start) {
+		joystick_handler(check_start, TRIGGER);
+		delay(10);
+	}
 	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
 
 //	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",

@@ -35,7 +35,7 @@ uint8_t JoystickGetState (uint8_t pos) {
 
 uint8_t SwitchGetState () {
 	LPC_GPIO2->FIODIR0 = 0;
-	Delay(1);
+	delay(1);
 	return ~(LPC_GPIO2->FIOPIN0);
 }
 

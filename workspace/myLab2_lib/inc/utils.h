@@ -17,7 +17,7 @@
 #define POLLING	0
 #define TRIGGER	1
 
-void Delay(uint32_t val);
-void joystick_handler(void(*oper)(int arg), uint8_t mode);
+void delay(uint32_t val);
+void joystick_handler(void(*oper)(uint8_t arg), uint8_t mode);
 
 #endif /* _UTILS_H */
