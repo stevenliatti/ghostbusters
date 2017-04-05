@@ -8,10 +8,7 @@
 #ifndef RACKET_H_
 #define RACKET_H_
 
-#include <stdbool.h>
-#include "object.h"
-#include "utils.h"
-#include "gpio.h"
+#include "game.h"
 
 // structure containing racket position, width and height
 typedef struct {
@@ -27,6 +24,7 @@ typedef struct {
 racket_t racket;
 
 racket_t init_racket(int x, int y, int width, int height, int dir, bool active);
-void move_racket(int pos);
+void move_racket(uint8_t pos);
+void racket_task(void *arg);
 
 #endif /* RACKET_H_ */
