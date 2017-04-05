@@ -27,12 +27,15 @@ void game_task(void *arg) {
 }
 
 void init_game(void) {
-	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
 	start = false;
+	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
+	racket = init_racket(110, 299, 30, 4, 00, true);
 	display_menu();
 	xTaskCreate(game_task, (signed portCHAR*)"Game Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(ball, (signed portCHAR*)"Ball Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
+	xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
 	vTaskStartScheduler();
 }

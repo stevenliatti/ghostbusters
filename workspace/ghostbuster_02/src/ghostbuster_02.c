@@ -10,7 +10,6 @@
 #include <stdint.h>
 
 // personal libraries
-#include "racket.h"
 #include "game.h"
 
 #define NO_COLLISION	0
@@ -99,13 +98,6 @@ int main(void)
 	display_ghosts();
 	init_game();
 
-	racket = init_racket(110, 299, 30, 4, 00, true);
-
-	if (xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
-			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
-			NULL)!=pdPASS) return 0;
-
-	vTaskStartScheduler();
 	while(1);
 	return 1;
 }

@@ -34,6 +34,7 @@
 #include "utils.h"
 #include "object.h"
 #include "ball.h"
+#include "racket.h"
 
 #define GHOST_NB 		5
 #define BALL_SIZE		3
