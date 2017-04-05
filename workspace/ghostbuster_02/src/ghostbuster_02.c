@@ -18,6 +18,7 @@
 #include "traces_ref.h"
 #include "custom_rand.h"
 #include "object.h"
+#include "racket.h"
 
 #define NO_COLLISION	0
 #define GHOST_NB 		5
@@ -94,6 +95,25 @@ void ball(void *arg) {
 	}
 }
 
+void racket_task(void *arg) {
+	while(1) {
+		int x = racket.x;
+		int y = racket.y;
+		int width = racket.width;
+		int height = racket.height;
+		lcd_filled_rectangle(x, y, x + width, y + height, LCD_GREEN);
+//		lcd_filled_circle(object[0].x, object[0].y, object[0].radius, LCD_WHITE);
+//		if (left_collision(&object[0])) object[0].dir ^= (WEST | EAST);
+//		if (right_collision(&object[0])) object[0].dir ^= (WEST | EAST);
+//		if (up_collision(&object[0])) object[0].dir ^= (NORTH | SOUTH);
+//		if (down_collision(&object[0])) object[0].dir ^= (NORTH | SOUTH);
+//		move_object(&object[0]);
+		joystick_handler(move_racket),)
+		vTaskDelay(8 / portTICK_RATE_MS);
+		lcd_filled_rectangle(x, y, x + width, y + height, LCD_GREEN);
+	}
+}
+
 int main(void)
 {
 	init_rnd32(1);
@@ -113,6 +133,13 @@ int main(void)
 	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
 		NULL)!=pdPASS) return 0;
+
+	racket = init_racket(110, 299, 30, 4, 00, true);
+
+	if (xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
+			NULL)!=pdPASS) return 0;
+
 	vTaskStartScheduler();
 	while(1);
 	return 1;

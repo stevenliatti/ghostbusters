@@ -20,4 +20,7 @@ typedef struct {
 	bool active;
 } racket_t;
 
+racket_t init_racket(int x, int y, int width, int height, int dir, bool active);
+void move_racket(racket_t *racket);
+
 #endif /* RACKET_H_ */
