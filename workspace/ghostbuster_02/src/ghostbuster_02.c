@@ -18,8 +18,6 @@
 // pointers on the ghosts bitmaps. 2 images by ghost direction.
 __DATA(RAM2) uint16_t *ghost_im_left[2], *ghost_im_right[2], *ghost_im_center[2];
 uint16_t ghost_width, ghost_height;
-// racket instance
-racket_t racket;
 
 /* The function looks at the collision only in the direction taken by the object referenced as "object_id".
  * It detects all collisions among all objects indexes between min_idx and max_idx (skipping object_id itself).
@@ -89,6 +87,24 @@ int display_ghosts() {
 	display_bitmap16(ghost_im_right[1], ghost_x(5), y, ghost_width, ghost_height);
 }
 
+void racket_task(void *arg) {
+	int last_x = racket.x;
+	int last_y = racket.y;
+	lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, LCD_GREEN);
+	while(1) {
+		if (JoystickGetState(LEFT) || JoystickGetState(RIGHT)) {
+			lcd_filled_rectangle(last_x, last_y, last_x + racket.width, last_y + racket.height, LCD_BLACK);
+			lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, LCD_GREEN);
+			last_x = racket.x;
+			last_y = racket.y;
+			joystick_handler(move_racket, POLLING);
+			vTaskDelay(8 / portTICK_RATE_MS);
+		} else {
+			vTaskDelay(10 / portTICK_RATE_MS);
+		}
+	}
+}
+
 int main(void)
 {
 	init_rnd32(1);
@@ -101,6 +117,17 @@ int main(void)
 	display_ghosts();
 	init_game();
 
+	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
+		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
+		NULL)!=pdPASS) return 0;
+
+	racket = init_racket(110, 299, 30, 4, 00, true);
+
+	if (xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
+			NULL)!=pdPASS) return 0;
+
+	vTaskStartScheduler();
 	while(1);
 	return 1;
 }
