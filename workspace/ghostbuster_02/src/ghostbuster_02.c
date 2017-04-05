@@ -29,6 +29,9 @@ object_t object[GHOST_NB+1];
 __DATA(RAM2) uint16_t *ghost_im_left[2], *ghost_im_right[2], *ghost_im_center[2];
 uint16_t ghost_width, ghost_height;
 
+uint8_t lives = 3;
+uint32_t score = 0;
+
 
 /* The function looks at the collision only in the direction taken by the object referenced as "object_id".
  * It detects all collisions among all objects indexes between min_idx and max_idx (skipping object_id itself).
@@ -70,6 +73,10 @@ int test_collision(int object_id, object_t *obj_array, int min_idx, int max_idx)
 	return NO_COLLISION;
 }
 
+void display_menu(void) {
+	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, "Lives: ");
+}
+
 void ball(void *arg) {
 	while(1) {
 		int x = object[0].x;
@@ -97,6 +104,7 @@ int main(void)
 
 	lcd_print(85, 100, SMALLFONT, LCD_WHITE, LCD_BLACK, "Have fun!");
 	display_bitmap16(ghost_im_left[0], 110, 150, ghost_width, ghost_height);
+	display_menu();
 
 	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
 

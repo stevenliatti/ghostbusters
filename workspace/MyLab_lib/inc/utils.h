@@ -14,7 +14,10 @@
 #include "LPC17xx.h"
 #endif
 
+#define POLLING	0
+#define TRIGGER	1
+
 void Delay(uint32_t val);
-void switchFlipFlop(uint8_t pos, void(*oper)(int arg));
+void joystick_handler(void(*oper)(int arg), uint8_t mode);
 
 #endif /* _UTILS_H */

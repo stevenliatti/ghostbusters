@@ -66,4 +66,5 @@ uint32_t getGPIOInterruptStatus(LPC_GPIO_TypeDef* gpio, uint8_t pin) {
 	if (gpio == GPIO2) {
 		return LPC_GPIOINT->IO2IntStatF >> pin;
 	}
+	return 0;
 }
