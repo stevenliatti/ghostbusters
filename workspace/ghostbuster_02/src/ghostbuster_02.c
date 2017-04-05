@@ -17,8 +17,12 @@
 #include "fonts.h"
 #include "traces_ref.h"
 #include "custom_rand.h"
+
+// personal libraries
 #include "object.h"
 #include "racket.h"
+#include "gpio.h"
+#include "utils.h"
 
 #define NO_COLLISION	0
 #define GHOST_NB 		5
@@ -29,10 +33,9 @@ object_t object[GHOST_NB+1];
 // pointers on the ghosts bitmaps. 2 images by ghost direction.
 __DATA(RAM2) uint16_t *ghost_im_left[2], *ghost_im_right[2], *ghost_im_center[2];
 uint16_t ghost_width, ghost_height;
-// racket instance
-racket_t racket;
 
-uint8_t lives = 3;
+bool start = false;
+uint8_t lives = 0;
 uint32_t score = 0;
 
 
@@ -80,6 +83,10 @@ void display_menu(void) {
 	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, "Lives: ");
 }
 
+void check_start(uint8_t joystick_pos) {
+	if (joystick_pos == CENTER) start = true;
+}
+
 void ball(void *arg) {
 	while(1) {
 		int x = object[0].x;
@@ -96,21 +103,20 @@ void ball(void *arg) {
 }
 
 void racket_task(void *arg) {
+	int last_x = racket.x;
+	int last_y = racket.y;
+	lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, LCD_GREEN);
 	while(1) {
-		int x = racket.x;
-		int y = racket.y;
-		int width = racket.width;
-		int height = racket.height;
-		lcd_filled_rectangle(x, y, x + width, y + height, LCD_GREEN);
-//		lcd_filled_circle(object[0].x, object[0].y, object[0].radius, LCD_WHITE);
-//		if (left_collision(&object[0])) object[0].dir ^= (WEST | EAST);
-//		if (right_collision(&object[0])) object[0].dir ^= (WEST | EAST);
-//		if (up_collision(&object[0])) object[0].dir ^= (NORTH | SOUTH);
-//		if (down_collision(&object[0])) object[0].dir ^= (NORTH | SOUTH);
-//		move_object(&object[0]);
-		joystick_handler(move_racket),)
-		vTaskDelay(8 / portTICK_RATE_MS);
-		lcd_filled_rectangle(x, y, x + width, y + height, LCD_GREEN);
+		if (JoystickGetState(LEFT) || JoystickGetState(RIGHT)) {
+			lcd_filled_rectangle(last_x, last_y, last_x + racket.width, last_y + racket.height, LCD_BLACK);
+			lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, LCD_GREEN);
+			last_x = racket.x;
+			last_y = racket.y;
+			joystick_handler(move_racket, POLLING);
+			vTaskDelay(8 / portTICK_RATE_MS);
+		} else {
+			vTaskDelay(10 / portTICK_RATE_MS);
+		}
 	}
 }
 
@@ -128,6 +134,10 @@ int main(void)
 	display_bitmap16(ghost_im_left[0], 110, 150, ghost_width, ghost_height);
 	display_menu();
 
+	while (!start) {
+		joystick_handler(check_start, TRIGGER);
+		delay(10);
+	}
 	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
 
 	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
