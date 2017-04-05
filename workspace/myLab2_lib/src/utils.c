@@ -14,14 +14,14 @@
 
 static bool last_state[5] = {false,false,false,false,false};
 
-void Delay(uint32_t val){
+void delay(uint32_t val){
 	initTimer(TIMER2, 25000);
 	startTimer(TIMER2);
 	while(getTime(TIMER2) != val);
 	stopTimer(TIMER2);
 }
 
-void joystick_handler(void(*oper)(int arg), uint8_t mode) {
+void joystick_handler(void(*oper)(uint8_t arg), uint8_t mode) {
 	uint8_t pos;
 	if (mode == TRIGGER) {
 		for (pos = CENTER; pos <= RIGHT; pos++) {
