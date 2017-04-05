@@ -10,7 +10,9 @@
 #include "game.h"
 
 void display_menu(void) {
-	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, "Lives: ");
+	char lives_string[10];
+	sprintf(lives_string, "Lives : %d", lives);
+	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, lives_string);
 }
 
 void check_start(uint8_t joystick_pos) {
@@ -24,14 +26,21 @@ void game_task(void *arg) {
 	}
 }
 
+void init_ball() {
+	object[0] = init_object(BALL_INIT_X - BALL_SIZE, BALL_INIT_Y, BALL_SIZE, NORTH | EAST, true);
+}
+
 void init_game(void) {
+	lives = 3;
 	start = false;
-	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
-	racket = init_racket(110, 299, 30, 4, 00, true);
+
+	init_ball();
+	init_racket();
 	display_menu();
+
 	xTaskCreate(game_task, (signed portCHAR*)"Game Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
-	xTaskCreate(ball, (signed portCHAR*)"Ball Task",
+	xTaskCreate(ball_task, (signed portCHAR*)"Ball Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
 			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);

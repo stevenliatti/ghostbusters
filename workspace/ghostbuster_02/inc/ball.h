@@ -10,6 +10,7 @@
 
 #include "game.h"
 
-void ball(void *arg);
+bool collision_ball_racket(object_t *object);
+void ball_task(void *arg);
 
 #endif /* BALL_H_ */

@@ -24,13 +24,13 @@ void delay(uint32_t val){
 void joystick_handler(void(*oper)(uint8_t arg), uint8_t mode) {
 	uint8_t pos;
 	if (mode == TRIGGER) {
-		for (pos = CENTER; pos <= RIGHT; pos++) {
+		for (pos = CENTER; pos <= LEFT; pos++) {
 			bool current_state = JoystickGetState(pos);
 			if (current_state && !last_state[pos-CENTER]) oper(pos);
 			last_state[pos-CENTER] = current_state;
 		}
 	} else if (mode == POLLING) {
-		for (pos = CENTER; pos <= RIGHT; pos++) {
+		for (pos = CENTER; pos <= LEFT; pos++) {
 			if (JoystickGetState(pos)) oper(pos);
 		}
 	}

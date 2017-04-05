@@ -39,6 +39,13 @@
 
 #define GHOST_NB 		5
 #define BALL_SIZE		3
+#define BALL_INIT_X		120
+#define BALL_INIT_Y		299
+
+#define RACKET_INIT_X	110	// racket initial y
+#define RACKET_INIT_Y	299	// racket initial y
+#define RACKET_WIDTH	30	// racket width
+#define RACKET_HEIGHT	4	// racket height
 
 // global variables
 bool start;
@@ -47,6 +54,7 @@ uint32_t score;
 object_t object[GHOST_NB+1];
 uint16_t ghost_width, ghost_height;
 
+void init_ball(void);
 void init_game(void);
 
 #endif /* GAME_H_ */
