@@ -11,5 +11,6 @@
 #define _GHOSTS_H_
 
 
+int display_ghosts();
 
 #endif /* _OBJECT_H_ */

@@ -19,9 +19,9 @@
 
 #define CENTER	19
 #define UP		20
-#define LEFT	21
+#define LEFT	23
 #define DOWN	22
-#define RIGHT	23
+#define RIGHT	21
 
 #define BUTTON_A		10
 #define BUTTON_B		19
