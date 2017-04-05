@@ -104,34 +104,6 @@ void ball(void *arg) {
 	}
 }
 
-int ghost_x(int ghost_id) {
-	return 10 + ghost_id * 30;
-}
-
-int display_ghosts() {
-	if ((ghost_im_left[0]=read_bmp_file("ghost_l1.bmp", &ghost_width, &ghost_height))==NULL)
-		return -1;
-	if ((ghost_im_left[1]=read_bmp_file("ghost_l2.bmp", &ghost_width, &ghost_height))==NULL)
-		return -1;
-	if ((ghost_im_center[0]=read_bmp_file("ghost_c1.bmp", &ghost_width, &ghost_height))==NULL)
-		return -1;
-	if ((ghost_im_center[1]=read_bmp_file("ghost_c2.bmp", &ghost_width, &ghost_height))==NULL)
-		return -1;
-	if ((ghost_im_right[0]=read_bmp_file("ghost_r1.bmp", &ghost_width, &ghost_height))==NULL)
-		return -1;
-	if ((ghost_im_right[1]=read_bmp_file("ghost_r2.bmp", &ghost_width, &ghost_height))==NULL)
-		return -1;
-
-	int y = 150;
-
-	display_bitmap16(ghost_im_left[0], ghost_x(0), y, ghost_width, ghost_height);
-	display_bitmap16(ghost_im_left[1], ghost_x(1), y, ghost_width, ghost_height);
-	display_bitmap16(ghost_im_center[0], ghost_x(2), y, ghost_width, ghost_height);
-	display_bitmap16(ghost_im_center[1], ghost_x(3), y, ghost_width, ghost_height);
-	display_bitmap16(ghost_im_right[0], ghost_x(4), y, ghost_width, ghost_height);
-	display_bitmap16(ghost_im_right[1], ghost_x(5), y, ghost_width, ghost_height);
-}
-
 int main(void)
 {
 	init_rnd32(1);

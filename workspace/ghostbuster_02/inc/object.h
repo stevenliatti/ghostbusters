@@ -7,8 +7,8 @@
 ===============================================================================
 */
 
-#ifndef _OBJECT_H
-#define _OBJECT_H
+#ifndef _OBJECT_H_
+#define _OBJECT_H_
 
 #include <stdbool.h>
 #include "lcd.h"
@@ -50,4 +50,4 @@ static inline bool down_collision(object_t *object) {return object->y >= (LCD_MA
 object_t init_object(int x, int y, int radius, int dir, bool active);
 void move_object(object_t *object);
 
-#endif /* _OBJECT_H */
+#endif /* _OBJECT_H_ */
