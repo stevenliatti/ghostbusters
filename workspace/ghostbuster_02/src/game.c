@@ -16,7 +16,7 @@ void display_menu(void) {
 }
 
 void check_start(uint8_t joystick_pos) {
-	if (joystick_pos == CENTER) start = true;
+	if (joystick_pos == CENTER) ball->active = true;
 }
 
 void game_task(void *arg) {
@@ -26,13 +26,8 @@ void game_task(void *arg) {
 	}
 }
 
-void init_ball() {
-	object[0] = init_object(BALL_INIT_X - BALL_SIZE, BALL_INIT_Y, BALL_SIZE, NORTH | EAST, true);
-}
-
 void init_game(void) {
 	lives = 3;
-	start = false;
 
 	init_ball();
 	init_racket();

@@ -60,9 +60,6 @@ int main(void)
 	init_lcd();
 	clear_screen(LCD_BLACK);
 	init_traces(115200, 1, true);		// to be removed if you implement your own traces
-
-	lcd_print(85, 100, SMALLFONT, LCD_WHITE, LCD_BLACK, "Have fun!");
-
 	display_ghosts();
 	init_game();
 

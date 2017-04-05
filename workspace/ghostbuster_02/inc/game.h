@@ -48,13 +48,13 @@
 #define RACKET_HEIGHT	4	// racket height
 
 // global variables
-bool start;
 uint8_t lives;
 uint32_t score;
 object_t object[GHOST_NB+1];
+object_t *ball;
 uint16_t ghost_width, ghost_height;
 
-void init_ball(void);
+void display_menu(void);
 void init_game(void);
 
 #endif /* GAME_H_ */
