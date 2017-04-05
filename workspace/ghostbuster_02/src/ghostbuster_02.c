@@ -97,10 +97,7 @@ int main(void)
 	lcd_print(85, 100, SMALLFONT, LCD_WHITE, LCD_BLACK, "Have fun!");
 
 	display_ghosts();
-
-	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
-		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
-		NULL)!=pdPASS) return 0;
+	init_game();
 
 	racket = init_racket(110, 299, 30, 4, 00, true);
 

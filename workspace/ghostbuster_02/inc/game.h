@@ -43,4 +43,6 @@ uint8_t lives;
 uint32_t score;
 object_t object[GHOST_NB+1];
 
+void init_game(void);
+
 #endif /* GAME_H_ */

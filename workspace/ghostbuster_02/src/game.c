@@ -20,7 +20,7 @@ void check_start(uint8_t joystick_pos) {
 }
 
 void game_task(void *arg) {
-	while (!start) {
+	while (1) {
 		joystick_handler(check_start, TRIGGER);
 		vTaskDelay(10 / portTICK_RATE_MS);
 	}
@@ -28,6 +28,7 @@ void game_task(void *arg) {
 
 void init_game(void) {
 	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
+	start = false;
 	display_menu();
 	xTaskCreate(game_task, (signed portCHAR*)"Game Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
