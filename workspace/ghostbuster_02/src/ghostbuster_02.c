@@ -10,7 +10,6 @@
 #include <stdint.h>
 
 // personal libraries
-#include "racket.h"
 #include "game.h"
 
 #define NO_COLLISION	0
@@ -55,24 +54,6 @@ int test_collision(int object_id, object_t *obj_array, int min_idx, int max_idx)
 	return NO_COLLISION;
 }
 
-void racket_task(void *arg) {
-	int last_x = racket.x;
-	int last_y = racket.y;
-	lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, LCD_GREEN);
-	while(1) {
-		if (JoystickGetState(LEFT) || JoystickGetState(RIGHT)) {
-			lcd_filled_rectangle(last_x, last_y, last_x + racket.width, last_y + racket.height, LCD_BLACK);
-			lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, LCD_GREEN);
-			last_x = racket.x;
-			last_y = racket.y;
-			joystick_handler(move_racket, POLLING);
-			vTaskDelay(8 / portTICK_RATE_MS);
-		} else {
-			vTaskDelay(10 / portTICK_RATE_MS);
-		}
-	}
-}
-
 int main(void)
 {
 	init_rnd32(1);
@@ -83,18 +64,8 @@ int main(void)
 	lcd_print(85, 100, SMALLFONT, LCD_WHITE, LCD_BLACK, "Have fun!");
 
 	display_ghosts();
+	init_game();
 
-	if (xTaskCreate(ball, (signed portCHAR*)"Ball Task",
-		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
-		NULL)!=pdPASS) return 0;
-
-	racket = init_racket(110, 299, 30, 4, 00, true);
-
-	if (xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
-			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,
-			NULL)!=pdPASS) return 0;
-
-	vTaskStartScheduler();
 	while(1);
 	return 1;
 }

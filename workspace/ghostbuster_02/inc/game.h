@@ -35,6 +35,7 @@
 #include "object.h"
 #include "ball.h"
 #include "ghosts.h"
+#include "racket.h"
 
 #define GHOST_NB 		5
 #define BALL_SIZE		3
@@ -46,5 +47,7 @@ object_t object[GHOST_NB+1];
 // pointers on the ghosts bitmaps. 2 images by ghost direction.
 __DATA(RAM2) uint16_t *ghost_im_left[2], *ghost_im_right[2], *ghost_im_center[2];
 uint16_t ghost_width, ghost_height;
+
+void init_game(void);
 
 #endif /* GAME_H_ */
