@@ -29,5 +29,8 @@ void display_ghosts(ghost_t *ghost);
 int init_ghosts();
 void ghost1_task(void *arg);
 void ghost2_task(void *arg);
+void ghost3_task(void *arg);
+void ghost4_task(void *arg);
+void ghost5_task(void *arg);
 
 #endif /* _OBJECT_H_ */
