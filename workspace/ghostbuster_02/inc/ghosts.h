@@ -10,7 +10,22 @@
 #ifndef _GHOSTS_H_
 #define _GHOSTS_H_
 
+#define GHOST_1 1
+#define GHOST_2 2
+#define GHOST_3 3
+#define GHOST_4 4
+#define GHOST_5 5
 
-int display_ghosts();
+#define Y_START 150
+
+typedef struct {
+	object_t *obj;
+	uint16_t *image;
+	int speed;
+} ghost_t;
+
+void display_ghosts(ghost_t *ghost);
+int init_ghosts();
+void ghost_task(void *arg);
 
 #endif /* _OBJECT_H_ */

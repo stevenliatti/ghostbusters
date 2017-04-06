@@ -46,6 +46,7 @@ uint8_t lives;
 uint32_t score;
 object_t object[GHOST_NB+1];
 uint16_t ghost_width, ghost_height;
+ghost_t ghosts[5];
 
 void init_game(void);
 
