@@ -7,8 +7,8 @@
 ===============================================================================
 */
 
-#ifndef GAME_H_
-#define GAME_H_
+#ifndef _GAME_H_
+#define _GAME_H_
 
 #ifdef __USE_CMSIS
 #include "LPC17xx.h"
@@ -66,4 +66,4 @@ xSemaphoreHandle sem_ball, sem_game;
 void display_menu(void);
 void init_game(void);
 
-#endif /* GAME_H_ */
+#endif /* _GAME_H_ */

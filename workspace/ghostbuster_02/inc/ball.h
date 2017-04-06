@@ -7,11 +7,11 @@
 ===============================================================================
 */
 
-#ifndef BALL_H_
-#define BALL_H_
+#ifndef _BALL_H_
+#define _BALL_H_
 
 void init_ball(void);
 bool collision_ball_racket(object_t *object);
 void ball_task(void *arg);
 
-#endif /* BALL_H_ */
+#endif /* _BALL_H_ */

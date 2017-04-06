@@ -19,6 +19,7 @@
 #define Y_START 150
 
 typedef struct {
+	int id;
 	object_t *obj;
 	uint16_t *image;
 	int speed;
@@ -26,6 +27,7 @@ typedef struct {
 
 void display_ghosts(ghost_t *ghost);
 int init_ghosts();
-void ghost_task(void *arg);
+void ghost1_task(void *arg);
+void ghost2_task(void *arg);
 
 #endif /* _OBJECT_H_ */

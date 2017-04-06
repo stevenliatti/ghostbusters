@@ -5,7 +5,7 @@
  Copyright   : HES-SO hepia
  Year        : 2016-2017
 ===============================================================================
-*/
+ */
 
 #include "game.h"
 
@@ -50,10 +50,14 @@ void init_game(void) {
 	display_menu();
 
 	xTaskCreate(game_task, (signed portCHAR*)"Game Task",
-		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(ball_task, (signed portCHAR*)"Ball Task",
-		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
+	xTaskCreate(ghost1_task, (signed portCHAR*)"Ghost 1 Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
+	xTaskCreate(ghost2_task, (signed portCHAR*)"Ghost 2 Task",
 			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
 	vTaskStartScheduler();
 }
