@@ -10,28 +10,48 @@
 #include "game.h"
 
 void display_menu(void) {
-	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, "Lives: ");
+	char lives_string[10], score_string[10];
+	sprintf(lives_string, "Lives : %d", lives);
+	sprintf(score_string, "Score : %d", score);
+	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, lives_string);
+	lcd_print(140, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, score_string);
 }
 
 void check_start(uint8_t joystick_pos) {
-	if (joystick_pos == CENTER) start = true;
+	if (joystick_pos == CENTER) {
+		lives = 3;
+		score = 0;
+		ball->active = true;
+		display_menu();
+	}
 }
 
 void game_task(void *arg) {
-	while (1) {
-		joystick_handler(check_start, TRIGGER);
-		vTaskDelay(10 / portTICK_RATE_MS);
+	while(1) {
+		while (!ball->active) {
+			lcd_print(65, 160, SMALLFONT, LCD_WHITE, LCD_BLACK, "Press joystick");
+			joystick_handler(check_start, TRIGGER);
+			SLEEP(10);
+		}
+		lcd_print(65, 160, SMALLFONT, LCD_BLACK, LCD_BLACK, "Press joystick");
+		xSemaphoreGive(sem_ball);
+		xSemaphoreTake(sem_game, portMAX_DELAY);
 	}
 }
 
 void init_game(void) {
-	start = false;
-	object[0] = init_object(239 - BALL_SIZE, 299, BALL_SIZE, NORTH | EAST, true);
-	racket = init_racket(110, 299, 30, 4, 00, true);
+	lives = 0;
+	score = 0;
+	sem_ball = xSemaphoreCreateCounting(1, 0);
+	sem_game = xSemaphoreCreateCounting(1, 0);
+
+	init_ball();
+	init_racket();
 	display_menu();
+
 	xTaskCreate(game_task, (signed portCHAR*)"Game Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
-	xTaskCreate(ball, (signed portCHAR*)"Ball Task",
+	xTaskCreate(ball_task, (signed portCHAR*)"Ball Task",
 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
 			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);

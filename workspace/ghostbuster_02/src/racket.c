@@ -8,9 +8,9 @@
 #include "racket.h"
 
 
-racket_t init_racket(int x, int y, int width, int height, int dir, bool active) {
-	racket_t racket = {x, y, width, height, dir, active	};
-	return racket;
+void init_racket() {
+	racket_t r = {RACKET_INIT_X, RACKET_INIT_Y, RACKET_WIDTH, RACKET_HEIGHT};
+	racket = r;
 }
 
 void move_racket(uint8_t pos) {
@@ -29,13 +29,13 @@ void racket_task(void *arg) {
 	while(1) {
 		if (JoystickGetState(LEFT) || JoystickGetState(RIGHT)) {
 			lcd_filled_rectangle(last_x, last_y, last_x + racket.width, last_y + racket.height, LCD_BLACK);
+			joystick_handler(move_racket, POLLING);
 			lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, LCD_GREEN);
 			last_x = racket.x;
 			last_y = racket.y;
-			joystick_handler(move_racket, POLLING);
-			vTaskDelay(8 / portTICK_RATE_MS);
+			SLEEP(8);
 		} else {
-			vTaskDelay(10 / portTICK_RATE_MS);
+			SLEEP(10);
 		}
 	}
 }
