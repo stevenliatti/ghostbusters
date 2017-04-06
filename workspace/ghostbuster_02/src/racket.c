@@ -33,9 +33,9 @@ void racket_task(void *arg) {
 			lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, LCD_GREEN);
 			last_x = racket.x;
 			last_y = racket.y;
-			vTaskDelay(8 / portTICK_RATE_MS);
+			SLEEP(8);
 		} else {
-			vTaskDelay(10 / portTICK_RATE_MS);
+			SLEEP(10);
 		}
 	}
 }

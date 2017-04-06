@@ -10,10 +10,7 @@
 #ifndef _OBJECT_H_
 #define _OBJECT_H_
 
-#include <stdbool.h>
-#include "lcd.h"
-
-#define STEP         2			// moving step for all objects
+#define STEP	2	// moving step for all objects
 
 // Direction vector. Note that only 8 directions are possible,
 // since NORTH|SOUTH is nonsense for example.

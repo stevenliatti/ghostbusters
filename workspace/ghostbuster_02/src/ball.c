@@ -1,10 +1,13 @@
 /*
- * ball.c
- *
- *  Created on: 5 avr. 2017
- *      Author: Orphee
- */
+===============================================================================
+ Name        : ball.c
+ Author      : R. Abdennadher & O. Antoniadis & S. Liatti
+ Copyright   : HES-SO hepia
+ Year        : 2016-2017
+===============================================================================
+*/
 
+#include "game.h"
 #include "ball.h"
 
 void init_ball(void) {
@@ -24,8 +27,7 @@ bool collision_ball_racket(object_t *object) {
 
 void ball_task(void *arg) {
 	while(1) {
-		while(!ball->active) vTaskDelay(10 / portTICK_RATE_MS);
-		display_menu();
+		xSemaphoreTake(sem_ball, portMAX_DELAY);
 		while(ball->active) {
 			int x = ball->x;
 			int y = ball->y;
@@ -35,7 +37,7 @@ void ball_task(void *arg) {
 			if (up_collision(ball)) ball->dir ^= (NORTH | SOUTH);
 			if (collision_ball_racket(ball)) ball->dir ^= (NORTH | SOUTH);
 			move_object(ball);
-			vTaskDelay(10 / portTICK_RATE_MS);
+			SLEEP(10);
 			lcd_filled_circle(x, y, ball->radius, LCD_BLACK);
 			if (down_collision(ball)) {
 				lives--;
@@ -45,9 +47,11 @@ void ball_task(void *arg) {
 				if (lives == 0) {
 					lives = 3;
 					ball->active = false;
+				} else {
+					SLEEP(1000);
 				}
-				vTaskDelay(1000 / portTICK_RATE_MS);
 			}
 		}
+		xSemaphoreGive(sem_game);
 	}
 }

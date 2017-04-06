@@ -1,14 +1,14 @@
 /*
- * ball.h
- *
- *  Created on: 5 avr. 2017
- *      Author: Orphee
- */
+===============================================================================
+ Name        : ball.h
+ Author      : R. Abdennadher & O. Antoniadis & S. Liatti
+ Copyright   : HES-SO hepia
+ Year        : 2016-2017
+===============================================================================
+*/
 
 #ifndef BALL_H_
 #define BALL_H_
-
-#include "game.h"
 
 void init_ball(void);
 bool collision_ball_racket(object_t *object);
