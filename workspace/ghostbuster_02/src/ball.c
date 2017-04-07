@@ -27,14 +27,12 @@ bool collision_ball_racket(object_t *ball) {
 
 void collision_ball_ghost(void) {
 	uint8_t colision_id = test_collision(0,object,1,5);
+	uint8_t random = rnd_32() % 2;
 	if (colision_id != 0 && object[colision_id].active) {
-		enum direction temp[] = {
-			NORTH,
-			SOUTH,
-			ball->dir ^ (ball->dir | WEST | EAST),
-			ball->dir & (WEST | EAST)
-		};
-		ball->dir = (temp[rnd_32() % 2] | temp[(rnd_32() % 2) + 2]);
+		enum direction temp[4] = {NORTH, SOUTH, 0, 0};
+		temp[3 - (ball->dir & NORTH)] = ball->dir ^ (ball->dir | WEST | EAST);
+		temp[2 + (ball->dir & NORTH)] = ball->dir & (WEST | EAST);
+		ball->dir = (temp[random] | temp[random + 2]);
 		object[colision_id].active = false;
 		score++;
 	}
