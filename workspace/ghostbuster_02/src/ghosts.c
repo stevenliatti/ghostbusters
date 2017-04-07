@@ -48,7 +48,6 @@ void free_ghosts(void) {
 	for (i = 0; i < GHOST_NB; i++) {
 		if (!object[i+1].active) {
 			object[i+1].active = true;
-			//xSemaphoreGive(sem_ghost[i]);
 		}
 	}
 }
@@ -73,8 +72,7 @@ void func_ghost_task(ghost_t *ghost) {
 			clear_ghost(x, y);
 			change_dir++;
 		}
-		SLEEP(10);
-		//xSemaphoreTake(sem_ghost[ghost->id], portMAX_DELAY);
+		SLEEP(20);
 	}
 }
 

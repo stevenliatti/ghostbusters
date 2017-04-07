@@ -46,7 +46,6 @@ void init_game(void) {
 	score = 0;
 	sem_ball = xSemaphoreCreateCounting(1, 0);
 	sem_game = xSemaphoreCreateCounting(1, 0);
-	for (i = 0; i < GHOST_NB; i++) sem_ghost[i] = xSemaphoreCreateCounting(1, 0);
 
 	init_ball();
 	init_racket();
