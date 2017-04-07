@@ -25,26 +25,34 @@ bool collision_ball_racket(object_t *object) {
 	return false;
 }
 
+void collision_ball_ghost(void) {
+	uint8_t colision_id = test_collision(0,object,1,5);
+	if (colision_id != 0 && object[colision_id].active) {
+		enum direction temp[] = {
+			NORTH,
+			SOUTH,
+			ball->dir ^ (ball->dir | WEST | EAST),
+			ball->dir & (WEST | EAST)
+		};
+		ball->dir = (temp[rnd_32() % 2] | temp[(rnd_32() % 2) + 2]);
+		object[colision_id].active = false;
+		score++;
+	}
+}
+
 void ball_task(void *arg) {
 	while(1) {
 		xSemaphoreTake(sem_ball, portMAX_DELAY);
 		while(ball->active) {
 			int x = ball->x;
 			int y = ball->y;
-			uint8_t colision_id = 0;
 			menu(DISPLAY);
 			lcd_filled_circle(ball->x, ball->y, ball->radius, LCD_WHITE);
 			if (left_collision(ball)) ball->dir ^= (WEST | EAST);
 			if (right_collision(ball)) ball->dir ^= (WEST | EAST);
 			if (up_collision(ball)) ball->dir ^= (NORTH | SOUTH);
 			if (collision_ball_racket(ball)) ball->dir ^= (NORTH | SOUTH);
-			colision_id = test_collision(0,object,1,5);
-			if (colision_id != 0 && object[colision_id].active) {
-				enum direction temp[] = {NORTH, SOUTH, WEST, EAST};
-				//ball->dir = (temp[rnd_32() % 2] | temp[(rnd_32() % 2) + 2]);
-				object[colision_id].active = false;
-				score++;
-			}
+			collision_ball_ghost();
 			move_object(ball);
 			SLEEP(10);
 			lcd_filled_circle(x, y, ball->radius, LCD_BLACK);
@@ -53,6 +61,7 @@ void ball_task(void *arg) {
 				menu(DISPLAY);
 				init_ball();
 				ball->active = true;
+				free_ghosts();
 				if (lives == 0) {
 					lives = 3;
 					ball->active = false;

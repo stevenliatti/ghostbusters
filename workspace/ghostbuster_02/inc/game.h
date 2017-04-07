@@ -64,7 +64,7 @@ object_t object[GHOST_NB+1];
 object_t *ball;
 uint16_t ghost_width, ghost_height;
 ghost_t ghosts[GHOST_NB];
-xSemaphoreHandle sem_ball, sem_game;
+xSemaphoreHandle sem_ball, sem_game, sem_ghost[GHOST_NB];
 
 void menu(uint32_t mode);
 void init_game(void);
