@@ -43,7 +43,7 @@
 
 #define NO_COLLISION	0
 #define GHOST_NB 		5
-#define BALL_SIZE		3
+#define BALL_RADIUS		3
 #define BALL_INIT_X		120
 #define BALL_INIT_Y		299
 

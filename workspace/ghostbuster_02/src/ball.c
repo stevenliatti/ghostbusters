@@ -11,18 +11,18 @@
 #include "ball.h"
 
 void init_ball(void) {
-	object[0] = init_object(BALL_INIT_X - BALL_SIZE, BALL_INIT_Y, BALL_SIZE, NORTH | EAST, false);
+	object[0] = init_object(BALL_INIT_X - BALL_RADIUS, BALL_INIT_Y, BALL_RADIUS, NORTH | EAST, false);
 	ball = &object[0];
 }
 
-bool collision_ball_racket(object_t *object) {
-	if (object->y + object->radius == RACKET_INIT_Y - 1 && object->dir & SOUTH) {
-		if (object->x + object->radius > racket.x - 2 &&
-				object->x - object->radius < racket.x + racket.width + 2) {
-		return true;
+bool collision_ball_racket(object_t *ball) {
+	if (ball->y + ball->radius == RACKET_INIT_Y - 1 && ball->dir & SOUTH) {
+			if (ball->x + ball->radius > racket.x - 2 &&
+					ball->x - ball->radius < racket.x + racket.width + 2) {
+			return true;
+			}
 		}
-	}
-	return false;
+		return false;
 }
 
 void ball_task(void *arg) {

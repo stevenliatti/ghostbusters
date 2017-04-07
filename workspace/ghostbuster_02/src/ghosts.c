@@ -37,7 +37,8 @@ int init_ghost(uint16_t *array_bmp_ghost[], int pos_array_bmp, char *filename, i
 }
 
 int init_ghosts() {
-	for (int i = 0; i < GHOST_NB; i++) {
+	int i;
+	for (i = 0; i < GHOST_NB; i++) {
 		init_ghost(ghost_im_center, i, "ghost_c1.bmp", i + 1);
 	}
 	return 0;
