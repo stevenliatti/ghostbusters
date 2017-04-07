@@ -13,6 +13,13 @@ void display_ghost(ghost_t *ghost) {
 
 void clear_ghost(int x, int y) {
 	lcd_filled_rectangle(x, y, x + ghost_width, y + ghost_height, LCD_BLACK);
+	//uint16_t i, j, color;
+	//for (i = x; i < x + ghost_width; i++) {
+	//	for (j = y; j < j + ghost_width; j++) {
+	//		read_pixels(i, j, i, j, &color);
+	//		lcd_filled_rectangle(i, j, i, j, color);
+	//	}
+	//}
 }
 
 //void update_position(ghost_t *ghost) {

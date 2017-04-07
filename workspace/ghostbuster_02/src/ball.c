@@ -41,7 +41,7 @@ void collision_ball_ghost(void) {
 		temp[2 + (ball->dir & NORTH)] = ball->dir & (WEST | EAST);
 		ball->dir = (temp[random] | temp[random + 2]);
 		object[collision_id].active = false;
-		score++;
+		score+=10;
 	}
 }
 
@@ -50,7 +50,6 @@ void lost_ball(void) {
 	menu(DISPLAY);
 	init_ball();
 	ball->active = true;
-	// free_ghosts();
 	if (lives == 0) {
 		lives = 3;
 		ball->active = false;
