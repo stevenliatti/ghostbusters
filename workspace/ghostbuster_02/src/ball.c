@@ -11,7 +11,7 @@
 #include "ball.h"
 
 void init_ball(void) {
-	object[0] = init_object(BALL_INIT_X - BALL_SIZE, BALL_INIT_Y, BALL_SIZE, NORTH | EAST, false);
+	object[0] = init_object(BALL_INIT_X - BALL_RADIUS, BALL_INIT_Y, BALL_RADIUS, NORTH | EAST, false);
 	ball = &object[0];
 }
 
@@ -31,17 +31,26 @@ void ball_task(void *arg) {
 		while(ball->active) {
 			int x = ball->x;
 			int y = ball->y;
+			uint8_t colision_id = 0;
+			menu(DISPLAY);
 			lcd_filled_circle(ball->x, ball->y, ball->radius, LCD_WHITE);
 			if (left_collision(ball)) ball->dir ^= (WEST | EAST);
 			if (right_collision(ball)) ball->dir ^= (WEST | EAST);
 			if (up_collision(ball)) ball->dir ^= (NORTH | SOUTH);
 			if (collision_ball_racket(ball)) ball->dir ^= (NORTH | SOUTH);
+			colision_id = test_collision(0,object,1,5);
+			if (colision_id != 0 && object[colision_id].active) {
+				enum direction temp[] = {NORTH, SOUTH, WEST, EAST};
+				//ball->dir = (temp[rnd_32() % 2] | temp[(rnd_32() % 2) + 2]);
+				object[colision_id].active = false;
+				score++;
+			}
 			move_object(ball);
 			SLEEP(10);
 			lcd_filled_circle(x, y, ball->radius, LCD_BLACK);
 			if (down_collision(ball)) {
 				lives--;
-				display_menu();
+				menu(DISPLAY);
 				init_ball();
 				ball->active = true;
 				if (lives == 0) {

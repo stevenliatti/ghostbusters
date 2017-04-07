@@ -53,5 +53,6 @@ static inline bool ghost_down_collision(object_t *object) {return object->y >= (
 
 object_t init_object(int x, int y, int radius, int dir, bool active);
 void move_object(object_t *object);
+int test_collision(int object_id, object_t *obj_array, int min_idx, int max_idx);
 
 #endif /* _OBJECT_H_ */

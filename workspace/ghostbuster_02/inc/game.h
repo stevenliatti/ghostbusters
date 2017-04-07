@@ -41,9 +41,12 @@
 #include "ghosts.h"
 #include "racket.h"
 
+#define DISPLAY 		LCD_WHITE
+#define	ERASE			LCD_BLACK
+
 #define NO_COLLISION	0
 #define GHOST_NB 		5
-#define BALL_SIZE		3
+#define BALL_RADIUS		3
 #define BALL_INIT_X		120
 #define BALL_INIT_Y		299
 
@@ -63,7 +66,7 @@ uint16_t ghost_width, ghost_height;
 ghost_t ghosts[GHOST_NB];
 xSemaphoreHandle sem_ball, sem_game;
 
-void display_menu(void);
+void menu(uint32_t mode);
 void init_game(void);
 
 #endif /* _GAME_H_ */
