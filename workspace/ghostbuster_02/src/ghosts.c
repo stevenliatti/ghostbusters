@@ -43,17 +43,9 @@ int init_ghosts(void) {
 	return 0;
 }
 
-void free_ghosts(void) {
-	uint8_t i;
-	for (i = 0; i < GHOST_NB; i++) {
-		if (!object[i+1].active) {
-			object[i+1].active = true;
-		}
-	}
-}
-
 void func_ghost_task(ghost_t *ghost) {
-	int change_dir = 0;
+	uint8_t change_dir = 0;
+	uint8_t random;
 	while(1) {
 		while(ghost->obj->active) {
 			if (change_dir == 100) {
@@ -73,6 +65,8 @@ void func_ghost_task(ghost_t *ghost) {
 			change_dir++;
 		}
 		SLEEP(20);
+		random = rnd_32() % 100;
+		if (random < 1) ghost->obj->active = true;
 	}
 }
 

@@ -50,7 +50,7 @@ void lost_ball(void) {
 	menu(DISPLAY);
 	init_ball();
 	ball->active = true;
-	free_ghosts();
+	// free_ghosts();
 	if (lives == 0) {
 		lives = 3;
 		ball->active = false;

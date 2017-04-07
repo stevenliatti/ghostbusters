@@ -41,7 +41,6 @@ void game_task(void *arg) {
 }
 
 void init_game(void) {
-	uint8_t i;
 	lives = 0;
 	score = 0;
 	sem_ball = xSemaphoreCreateCounting(1, 0);
