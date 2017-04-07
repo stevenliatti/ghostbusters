@@ -9,20 +9,21 @@
 
 #include "game.h"
 
-void display_menu(void) {
+void menu(uint32_t mode) {
 	char lives_string[10], score_string[10];
 	sprintf(lives_string, "Lives : %d", lives);
 	sprintf(score_string, "Score : %d", score);
-	lcd_print(40, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, lives_string);
-	lcd_print(140, 305, SMALLFONT, LCD_WHITE, LCD_BLACK, score_string);
+	lcd_print(40, 305, SMALLFONT, mode, LCD_BLACK, lives_string);
+	lcd_print(140, 305, SMALLFONT, mode, LCD_BLACK, score_string);
 }
 
 void check_start(uint8_t joystick_pos) {
 	if (joystick_pos == CENTER) {
+		menu(ERASE);
 		lives = 3;
 		score = 0;
 		ball->active = true;
-		display_menu();
+		menu(DISPLAY);
 	}
 }
 
@@ -40,14 +41,17 @@ void game_task(void *arg) {
 }
 
 void init_game(void) {
+	uint8_t i;
 	lives = 0;
 	score = 0;
 	sem_ball = xSemaphoreCreateCounting(1, 0);
 	sem_game = xSemaphoreCreateCounting(1, 0);
+	for (i = 0; i < GHOST_NB; i++) sem_ghost[i] = xSemaphoreCreateCounting(1, 0);
 
 	init_ball();
 	init_racket();
-	display_menu();
+	init_ghosts();
+	menu(DISPLAY);
 
 	xTaskCreate(game_task, (signed portCHAR*)"Game Task",
 			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);

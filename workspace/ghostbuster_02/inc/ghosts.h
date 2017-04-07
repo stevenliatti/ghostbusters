@@ -26,7 +26,8 @@ typedef struct {
 } ghost_t;
 
 void display_ghosts(ghost_t *ghost);
-int init_ghosts();
+int init_ghosts(void);
+void free_ghosts(void) ;
 void ghost1_task(void *arg);
 void ghost2_task(void *arg);
 void ghost3_task(void *arg);

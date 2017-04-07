@@ -36,32 +36,45 @@ int init_ghost(uint16_t *array_bmp_ghost[], int pos_array_bmp, char *filename, i
 	return 0;
 }
 
-int init_ghosts() {
-	int i;
-	for (i = 0; i < GHOST_NB; i++) {
+int init_ghosts(void) {
+	for (int i = 0; i < GHOST_NB; i++) {
 		init_ghost(ghost_im_center, i, "ghost_c1.bmp", i + 1);
 	}
 	return 0;
 }
 
+void free_ghosts(void) {
+	uint8_t i;
+	for (i = 0; i < GHOST_NB; i++) {
+		if (!object[i+1].active) {
+			object[i+1].active = true;
+			//xSemaphoreGive(sem_ghost[i]);
+		}
+	}
+}
+
 void func_ghost_task(ghost_t *ghost) {
 	int change_dir = 0;
 	while(1) {
-		if (change_dir == 100) {
-			ghost->obj->dir = direction_map[rand_direction()];
-			change_dir = 0;
+		while(ghost->obj->active) {
+			if (change_dir == 100) {
+				ghost->obj->dir = direction_map[rand_direction()];
+				change_dir = 0;
+			}
+			int x = ghost->obj->x;
+			int y = ghost->obj->y;
+			display_ghost(ghost);
+			if (ghost_left_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
+			if (ghost_right_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
+			if (ghost_up_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
+			if (ghost_down_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
+			move_object(ghost->obj);
+			SLEEP(ghost->speed);
+			clear_ghost(x, y);
+			change_dir++;
 		}
-		int x = ghost->obj->x;
-		int y = ghost->obj->y;
-		display_ghost(ghost);
-		if (ghost_left_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
-		if (ghost_right_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
-		if (ghost_up_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
-		if (ghost_down_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
-		move_object(ghost->obj);
-		SLEEP(ghost->speed);
-		clear_ghost(x, y);
-		change_dir++;
+		SLEEP(10);
+		//xSemaphoreTake(sem_ghost[ghost->id], portMAX_DELAY);
 	}
 }
 
