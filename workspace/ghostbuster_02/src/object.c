@@ -1,20 +1,32 @@
-/*
-===============================================================================
- Name        : object.c
- Author      : R. Abdennadher & O. Antoniadis & S. Liatti
- Copyright   : HES-SO hepia
- Year        : 2016-2017
-===============================================================================
-*/
+/**
+ * @file 		object.c
+ * @brief      This file contains all the functions to manage an object_t
+ *
+ * @author     Steven Liatti
+ * @author     Orphée Antoniadis
+ * @author     Raed Abdennadher
+ * @bug        No known bugs.
+ * @date       April 8, 2017
+ * @version    1.0
+ */
 
 #include "game.h"
 #include "object.h"
 
+/**
+ * @brief      This function will initalize an object.
+ */
 object_t init_object(int x, int y, int radius, int dir, bool active) {
 	object_t object = {x, y, radius, dir, active};
 	return object;
 }
 
+/**
+ * @brief      This function moves an object depending on its direction. It uses
+ *					the inline functions of object.h header file.
+ *
+ * @ param		object Pointer on the object to move.
+ */
 void move_object(object_t *object) {
 	switch(object->dir) {
 		case NORTH: move_north(object); break;

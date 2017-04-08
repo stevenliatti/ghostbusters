@@ -1,11 +1,14 @@
-/*
-===============================================================================
- Name        : game.h
- Author      : R. Abdennadher & O. Antoniadis & S. Liatti
- Copyright   : HES-SO hepia
- Year        : 2016-2017
-===============================================================================
-*/
+/**
+ * @file 		game.h
+ * @brief      This is the header of the game mangement.
+ *
+ * @author     Steven Liatti
+ * @author     Orphée Antoniadis
+ * @author     Raed Abdennadher
+ * @bug        No known bugs.
+ * @date       April 8, 2017
+ * @version    1.0
+ */
 
 #ifndef _GAME_H_
 #define _GAME_H_

@@ -1,14 +1,23 @@
-/*
-===============================================================================
- Name        : game.c
- Author      : R. Abdennadher & O. Antoniadis & S. Liatti
- Copyright   : HES-SO hepia
- Year        : 2016-2017
-===============================================================================
+/**
+ * @file 		game.c
+ * @brief      This file contains all the functions to manage the game
+ *
+ * @author     Steven Liatti
+ * @author     Orphée Antoniadis
+ * @author     Raed Abdennadher
+ * @bug        No known bugs.
+ * @date       April 8, 2017
+ * @version    1.0
  */
 
 #include "game.h"
 
+/**
+ * @brief      This function will display what we call the menu of the game
+ *					(the number of lives and the score of the player).
+ *
+ * @param      mode   DISPLAY or ERASE (print the menu or erase it)
+ */
 void menu(uint32_t mode) {
 	char lives_string[10], score_string[10];
 	sprintf(lives_string, "Lives : %d", lives);
@@ -17,6 +26,12 @@ void menu(uint32_t mode) {
 	lcd_print(140, 305, SMALLFONT, mode, LCD_BLACK, score_string);
 }
 
+/**
+ * @brief      This function will be called everytime the joystick is used. It
+ *					checks if the center position is pressed and if it does, the game starts.
+ *
+ * @param      joystick_pos   position of the joystick
+ */
 void check_start(uint8_t joystick_pos) {
 	if (joystick_pos == CENTER) {
 		menu(ERASE);
@@ -27,6 +42,14 @@ void check_start(uint8_t joystick_pos) {
 	}
 }
 
+/**
+ * @brief      This function is a task manage by the RTOS. If the ball is not
+ *					active, the game has not start yet and the task will check every
+ *					10ms if the joystick has been pressed using the check_start function.
+ *					When the game starts, this task wait on a semaphore.
+ *
+ * @param      arg   A void pointer
+ */
 void game_task(void *arg) {
 	while(1) {
 		while (!ball->active) {
@@ -40,6 +63,9 @@ void game_task(void *arg) {
 	}
 }
 
+/**
+ * @brief      This function will initialize all the variables and the tasks.
+ */
 void init_game(void) {
 	lives = 0;
 	score = 0;
