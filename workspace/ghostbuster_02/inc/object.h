@@ -18,13 +18,13 @@
 
 // Direction vector. Note that only 8 directions are possible,
 // since NORTH|SOUTH is nonsense for example.
-enum direction {
+typedef enum {
 	NORTH=1,
 	EAST=2,
 	SOUTH=4,
 	WEST=8
-};
-static const enum direction direction_map[] = {NORTH, EAST, SOUTH, WEST};
+} direction;
+static const direction direction_map[] = {NORTH, EAST, SOUTH, WEST};
 
 // structure containing object position, size and direction
 typedef struct {

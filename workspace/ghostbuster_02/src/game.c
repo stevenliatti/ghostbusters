@@ -83,7 +83,10 @@ void init_game(void) {
 	xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
 			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
 	if (!TEST_MODE) {
-		init_ghosts();
+		if (init_ghosts() == -1) {
+			printf("error");
+			while(1);
+		}
 		xTaskCreate(ghost1_task, (signed portCHAR*)"Ghost 1 Task",
 				configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
 		xTaskCreate(ghost2_task, (signed portCHAR*)"Ghost 2 Task",

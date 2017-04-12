@@ -60,7 +60,7 @@ void collision_ball_ghost(void) {
 	uint8_t collision_id = test_collision(0,object,1,5);
 	uint8_t random = rnd_32() % 2;
 	if (collision_id != 0 && object[collision_id].active) {
-		enum direction temp[4] = {NORTH, SOUTH, 0, 0};
+		direction temp[4] = {NORTH, SOUTH, 0, 0};
 		temp[3 - (ball->dir & NORTH)] = ball->dir ^ (ball->dir | WEST | EAST);
 		temp[2 + (ball->dir & NORTH)] = ball->dir & (WEST | EAST);
 		ball->dir = (temp[random] | temp[random + 2]);

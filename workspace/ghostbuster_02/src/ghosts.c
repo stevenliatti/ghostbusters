@@ -20,38 +20,93 @@ void clear_ghost(int x, int y) {
 //}
 
 int rand_direction() {
-	return rnd_32() % sizeof(direction_map);
+	return rnd_32() % sizeof(direction_map)/sizeof(direction_map[0]);
 }
 
-int init_ghost(uint16_t *array_bmp_ghost[], int pos_array_bmp, char *filename, int ghost_id) {
-	if ((array_bmp_ghost[pos_array_bmp] = read_bmp_file(filename, &ghost_width, &ghost_height)) == NULL)
-		return -1;
-	object[ghost_id] = init_object(ghost_x(ghost_id), Y_START, ghost_height, direction_map[rand_direction()], true);
+int init_bmp_ghost() {
+	if ((ghost_im_center[0] = read_bmp_file("ghost_c1.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_center[1] = read_bmp_file("ghost_c2.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_left[0] = read_bmp_file("ghost_l1.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_left[1] = read_bmp_file("ghost_l2.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_right[0] = read_bmp_file("ghost_r1.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_right[1] = read_bmp_file("ghost_r2.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	return 0;
+}
+
+void init_bmp_dir_ghost(direction dir, ghost_t *ghost) {
+	switch (dir) {
+		case NORTH:
+			ghost->image = ghost_im_center[0];
+			break;
+		case SOUTH:
+			ghost->image = ghost_im_center[0];
+			break;
+		case WEST:
+			ghost->image = ghost_im_left[0];
+			break;
+		case EAST:
+			ghost->image = ghost_im_right[0];
+			break;
+		default:
+			break;
+	}
+}
+
+void animate(ghost_t *ghost) {
+	bool inverse = !ghost->index_img % 2;
+	ghost->index_img = inverse;
+	switch (ghost->obj->dir) {
+		case NORTH:
+			ghost->image = ghost_im_center[inverse];
+			break;
+		case SOUTH:
+			ghost->image = ghost_im_center[inverse];
+			break;
+		case WEST:
+			ghost->image = ghost_im_left[inverse];
+			break;
+		case EAST:
+			ghost->image = ghost_im_right[inverse];
+			break;
+		default:
+			break;
+	}
+}
+
+int init_ghost(int ghost_id) {
+	direction dir = direction_map[rand_direction()];
+	object[ghost_id] = init_object(ghost_x(ghost_id), Y_START, ghost_height, dir, true);
 	int internal_id = ghost_id - 1;
-	ghosts[internal_id].id = ghost_id;
 	ghosts[internal_id].obj = &object[ghost_id];
-	ghosts[internal_id].image = array_bmp_ghost[pos_array_bmp];
+	init_bmp_dir_ghost(dir, &ghosts[internal_id]);
+	ghosts[internal_id].index_img = 0;
 	ghosts[internal_id].speed = 20 + ghost_id * 2;
 	display_ghost(&ghosts[internal_id]);
 	return 0;
 }
 
 int init_ghosts(void) {
+	if (init_bmp_ghost() == -1) { return -1; }
 	int i;
-	for (i = 0; i < GHOST_NB; i++) {
-		init_ghost(ghost_im_center, i, "ghost_c1.bmp", i + 1);
+	for (i = 1; i <= GHOST_NB; ++i) {
+		if (init_ghost(i) == -1) { return -1;	}
 	}
 	return 0;
 }
 
 void func_ghost_task(ghost_t *ghost) {
 	uint8_t change_dir = 0;
+	uint8_t change_img = 0;
 	uint8_t random;
 	while(1) {
 		while(ghost->obj->active) {
 			if (change_dir == 100) {
 				ghost->obj->dir = direction_map[rand_direction()];
 				change_dir = 0;
+			}
+			if (change_img == 5) {
+				animate(ghost);
+				change_img = 0;
 			}
 			int x = ghost->obj->x;
 			int y = ghost->obj->y;
@@ -64,6 +119,7 @@ void func_ghost_task(ghost_t *ghost) {
 			SLEEP(ghost->speed);
 			clear_ghost(x, y);
 			change_dir++;
+			change_img++;
 		}
 		SLEEP(20);
 		random = rnd_32() % 100;
