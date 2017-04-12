@@ -1,11 +1,14 @@
-/*
-===============================================================================
- Name        : object.h
- Author      : R. Abdennadher & O. Antoniadis & S. Liatti
- Copyright   : HES-SO hepia
- Year        : 2016-2017
-===============================================================================
-*/
+/**
+ * @file 		object.h
+ * @brief      This file is the header file of the object management.
+ *
+ * @author     Steven Liatti
+ * @author     Orphée Antoniadis
+ * @author     Raed Abdennadher
+ * @bug        No known bugs.
+ * @date       April 8, 2017
+ * @version    1.0
+ */
 
 #ifndef _OBJECT_H_
 #define _OBJECT_H_

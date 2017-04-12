@@ -13,6 +13,13 @@ void display_ghost(ghost_t *ghost) {
 
 void clear_ghost(int x, int y) {
 	lcd_filled_rectangle(x, y, x + ghost_width, y + ghost_height, LCD_BLACK);
+	//uint16_t i, j, color;
+	//for (i = x; i < x + ghost_width; i++) {
+	//	for (j = y; j < j + ghost_width; j++) {
+	//		read_pixels(i, j, i, j, &color);
+	//		lcd_filled_rectangle(i, j, i, j, color);
+	//	}
+	//}
 }
 
 //void update_position(ghost_t *ghost) {
@@ -44,18 +51,9 @@ int init_ghosts(void) {
 	return 0;
 }
 
-void free_ghosts(void) {
-	uint8_t i;
-	for (i = 0; i < GHOST_NB; i++) {
-		if (!object[i+1].active) {
-			object[i+1].active = true;
-			//xSemaphoreGive(sem_ghost[i]);
-		}
-	}
-}
-
 void func_ghost_task(ghost_t *ghost) {
-	int change_dir = 0;
+	uint8_t change_dir = 0;
+	uint8_t random;
 	while(1) {
 		while(ghost->obj->active) {
 			if (change_dir == 100) {
@@ -74,8 +72,9 @@ void func_ghost_task(ghost_t *ghost) {
 			clear_ghost(x, y);
 			change_dir++;
 		}
-		SLEEP(10);
-		//xSemaphoreTake(sem_ghost[ghost->id], portMAX_DELAY);
+		SLEEP(20);
+		random = rnd_32() % 100;
+		if (random < 1) ghost->obj->active = true;
 	}
 }
 

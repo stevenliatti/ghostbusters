@@ -1,11 +1,14 @@
-/*
-===============================================================================
- Name        : game.h
- Author      : R. Abdennadher & O. Antoniadis & S. Liatti
- Copyright   : HES-SO hepia
- Year        : 2016-2017
-===============================================================================
-*/
+/**
+ * @file 		game.h
+ * @brief      This is the header of the game mangement.
+ *
+ * @author     Steven Liatti
+ * @author     Orphée Antoniadis
+ * @author     Raed Abdennadher
+ * @bug        No known bugs.
+ * @date       April 8, 2017
+ * @version    1.0
+ */
 
 #ifndef _GAME_H_
 #define _GAME_H_
@@ -41,6 +44,7 @@
 #include "ghosts.h"
 #include "racket.h"
 
+#define TEST_MODE		0
 #define DISPLAY 		LCD_WHITE
 #define	ERASE			LCD_BLACK
 
@@ -64,7 +68,7 @@ object_t object[GHOST_NB+1];
 object_t *ball;
 uint16_t ghost_width, ghost_height;
 ghost_t ghosts[GHOST_NB];
-xSemaphoreHandle sem_ball, sem_game, sem_ghost[GHOST_NB];
+xSemaphoreHandle sem_ball, sem_game;
 
 void menu(uint32_t mode);
 void init_game(void);
