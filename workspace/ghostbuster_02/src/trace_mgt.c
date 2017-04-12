@@ -28,7 +28,6 @@ struct {
  *             val: 1 if task becomes active, 0 otherwise
  */
 void write_trace(uint8_t trace_id, short val) {
-	//write_trace_ref(trace_id, val);		// to be replaced by your own implementation
 	trace_t trace;
 	trace.synchro = SYNCHRO_WORD;
 	trace.sig_idx = trace_id;
@@ -41,11 +40,9 @@ void write_trace(uint8_t trace_id, short val) {
 
 
 void vApplicationIdleHook(void) {
-	while(1) {
-		// implement trace sending here after having set configUSE_IDLE_HOOK to 1 in FreeRTOSConfig.h
+	while (circ_buffer.read != circ_buffer.write) {
 		uart0_send((uint8_t*)&circ_buffer.buffer[circ_buffer.read], 8);
 		circ_buffer.read = (circ_buffer.read + 1) % BUFFER_SIZE;
-		taskYIELD();		// force changement de contexte
 	}
 }
 
