@@ -38,6 +38,7 @@
 
 // personal libraries
 #include "gpio.h"
+#include "timer.h"
 #include "utils.h"
 #include "object.h"
 #include "ball.h"

@@ -96,5 +96,7 @@ void init_game(void) {
 				configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
 	}
 
+	stopTimer(TIMER0);
+	startTimer(TIMER0);
 	vTaskStartScheduler();
 }
