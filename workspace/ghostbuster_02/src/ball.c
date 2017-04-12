@@ -66,6 +66,7 @@ void collision_ball_ghost(void) {
 		ball->dir = (temp[random] | temp[random + 2]);
 		object[collision_id].active = false;
 		score+=10;
+		menu(DISPLAY);
 	}
 }
 
@@ -102,7 +103,6 @@ void ball_task(void *arg) {
 		while(ball->active) {
 			int x = ball->x;
 			int y = ball->y;
-			menu(DISPLAY);
 			lcd_filled_circle(ball->x, ball->y, ball->radius, LCD_WHITE);
 			collision_ball_wall();
 			collision_ball_ghost();

@@ -44,6 +44,7 @@
 #include "ghosts.h"
 #include "racket.h"
 
+#define TEST_MODE		0
 #define DISPLAY 		LCD_WHITE
 #define	ERASE			LCD_BLACK
 
