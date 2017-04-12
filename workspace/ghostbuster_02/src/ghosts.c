@@ -94,7 +94,8 @@ int init_ghosts(void) {
 	return 0;
 }
 
-void func_ghost_task(ghost_t *ghost) {
+void ghost_task(void *arg) {
+	ghost_t *ghost = (ghost_t*)arg;
 	uint8_t change_dir = 0;
 	uint8_t change_img = 0;
 	uint8_t random;
@@ -127,12 +128,3 @@ void func_ghost_task(ghost_t *ghost) {
 	}
 }
 
-void ghost1_task(void *arg) { func_ghost_task(&ghosts[0]); }
-
-void ghost2_task(void *arg) { func_ghost_task(&ghosts[1]); }
-
-void ghost3_task(void *arg) { func_ghost_task(&ghosts[2]); }
-
-void ghost4_task(void *arg) { func_ghost_task(&ghosts[3]); }
-
-void ghost5_task(void *arg) { func_ghost_task(&ghosts[4]); }

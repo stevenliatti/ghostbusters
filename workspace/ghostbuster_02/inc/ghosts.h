@@ -25,12 +25,7 @@ typedef struct {
 	int speed;
 } ghost_t;
 
-void display_ghosts(ghost_t *ghost);
 int init_ghosts(void);
-void ghost1_task(void *arg);
-void ghost2_task(void *arg);
-void ghost3_task(void *arg);
-void ghost4_task(void *arg);
-void ghost5_task(void *arg);
+void ghost_task(void *arg);
 
 #endif /* _GHOSTS_H_ */
