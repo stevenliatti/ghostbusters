@@ -19,6 +19,7 @@
 #define Y_START 150
 
 typedef struct {
+	int id;
 	object_t *obj;
 	uint16_t *image;
 	char index_img;
@@ -27,5 +28,9 @@ typedef struct {
 
 int init_ghosts(void);
 void ghost_task(void *arg);
+bool ghost_left_collision(object_t *object);
+bool ghost_right_collision(object_t *object);
+bool ghost_up_collision(object_t *object);
+bool ghost_down_collision(object_t *object);
 
 #endif /* _GHOSTS_H_ */

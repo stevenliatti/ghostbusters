@@ -1,13 +1,13 @@
 /**
  * @file 		game.h
- * @brief      This is the header of the game mangement.
+ * @brief		This is the header of the game mangement.
  *
- * @author     Steven Liatti
- * @author     Orphée Antoniadis
- * @author     Raed Abdennadher
- * @bug        No known bugs.
- * @date       April 8, 2017
- * @version    1.0
+ * @author		Steven Liatti
+ * @author		Orphée Antoniadis
+ * @author		Raed Abdennadher
+ * @bug			No known bugs.
+ * @date		April 12, 2017
+ * @version		1.0
  */
 
 #ifndef _GAME_H_
@@ -35,6 +35,7 @@
 #include "fonts.h"
 #include "traces_ref.h"
 #include "custom_rand.h"
+#include "uart.h"
 
 // personal libraries
 #include "gpio.h"
@@ -45,7 +46,6 @@
 #include "ghosts.h"
 #include "racket.h"
 
-#define TEST_MODE		0
 #define DISPLAY 		LCD_WHITE
 #define	ERASE			LCD_BLACK
 
@@ -55,7 +55,7 @@
 #define BALL_INIT_X		120
 #define BALL_INIT_Y		299
 
-#define RACKET_INIT_X	110	// racket initial y
+#define RACKET_INIT_X	110	// racket initial x
 #define RACKET_INIT_Y	299	// racket initial y
 #define RACKET_WIDTH	30	// racket width
 #define RACKET_HEIGHT	4	// racket height

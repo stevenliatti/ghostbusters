@@ -1,13 +1,13 @@
 /**
  * @file 		ball.c
- * @brief      This file contains all the functions to manage the ball
+ * @brief		This file contains all the functions to manage the ball
  *
- * @author     Steven Liatti
- * @author     Orphée Antoniadis
- * @author     Raed Abdennadher
- * @bug        No known bugs.
- * @date       April 8, 2017
- * @version    1.0
+ * @author		Steven Liatti
+ * @author		Orphée Antoniadis
+ * @author		Raed Abdennadher
+ * @bug			No known bugs.
+ * @date		April 12, 2017
+ * @version		1.0
  */
 
 #include "game.h"
@@ -17,8 +17,24 @@
  * @brief 		This function will initalize the ball object calling init_object.
  */
 void init_ball(void) {
-	object[0] = init_object(BALL_INIT_X - BALL_RADIUS, BALL_INIT_Y, BALL_RADIUS, NORTH | EAST, false);
+	object[0] = init_object(BALL_INIT_X, BALL_INIT_Y - BALL_RADIUS - 1, BALL_RADIUS, NORTH | EAST, false);
 	ball = &object[0];
+}
+
+bool left_collision(object_t *object) {
+	return object->x <= object->radius + STEP && object->dir & WEST;
+}
+
+bool right_collision(object_t *object) {
+	return object->x >= (LCD_MAX_WIDTH - object->radius - STEP) && object->dir & EAST;
+}
+
+bool up_collision(object_t *object) {
+	return object->y <= object->radius + STEP && object->dir & NORTH;
+}
+
+bool down_collision(object_t *object) {
+	return object->y >= (LCD_MAX_HEIGHT - object->radius - STEP) && object->dir & SOUTH;
 }
 
 /**
