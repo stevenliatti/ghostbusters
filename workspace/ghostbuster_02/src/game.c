@@ -13,10 +13,10 @@
 #include "game.h"
 
 /**
- * @brief      This function will display what we call the menu of the game
- *					(the number of lives and the score of the player).
+ * @brief 		This function will display what we call the menu of the game
+ * 				(the number of lives and the score of the player).
  *
- * @param      mode   DISPLAY or ERASE (print the menu or erase it)
+ * @param 		mode   DISPLAY or ERASE (print the menu or erase it)
  */
 void menu(uint32_t mode) {
 	char lives_string[10], score_string[10];
@@ -27,10 +27,10 @@ void menu(uint32_t mode) {
 }
 
 /**
- * @brief      This function will be called everytime the joystick is used. It
- *					checks if the center position is pressed and if it does, the game starts.
+ * @brief 		This function will be called everytime the joystick is used. It
+ * 				checks if the center position is pressed and if it does, the game starts.
  *
- * @param      joystick_pos   position of the joystick
+ * @param 		joystick_pos   position of the joystick
  */
 void check_start(uint8_t joystick_pos) {
 	if (joystick_pos == CENTER) {
@@ -43,12 +43,12 @@ void check_start(uint8_t joystick_pos) {
 }
 
 /**
- * @brief      This function is a task manage by the RTOS. If the ball is not
- *					active, the game has not start yet and the task will check every
- *					10ms if the joystick has been pressed using the check_start function.
- *					When the game starts, this task wait on a semaphore.
+ * @brief 		This function is a task manage by the RTOS. If the ball is not
+ * 				active, the game has not start yet and the task will check every
+ * 				10ms if the joystick has been pressed using the check_start function.
+ * 				When the game starts, this task wait on a semaphore.
  *
- * @param      arg   A void pointer
+ * @param 		arg   A void pointer
  */
 void game_task(void *arg) {
 	while(1) {
@@ -64,7 +64,7 @@ void game_task(void *arg) {
 }
 
 /**
- * @brief      This function will initialize all the variables and the tasks.
+ * @brief 		This function will initialize all the variables and the tasks.
  */
 void init_game(void) {
 	lives = 0;
