@@ -14,7 +14,7 @@
 #include "ball.h"
 
 /**
- * @brief      This function will initalize the ball object calling init_object.
+ * @brief 		This function will initalize the ball object calling init_object.
  */
 void init_ball(void) {
 	object[0] = init_object(BALL_INIT_X, BALL_INIT_Y - BALL_RADIUS - 1, BALL_RADIUS, NORTH | EAST, false);
@@ -38,9 +38,9 @@ bool down_collision(object_t *object) {
 }
 
 /**
- * @brief      This function checks if the ball object has a colision with the
- *					wall (the border of the screen). If it does, the direction of
- *					the ball is inversed.
+ * @brief		This function checks if the ball object has a colision with the
+ * 				wall (the border of the screen). If it does, the direction of
+ * 				the ball is inversed.
  */
 void collision_ball_wall(void) {
 	if (left_collision(ball)) ball->dir ^= (WEST | EAST);
@@ -50,8 +50,8 @@ void collision_ball_wall(void) {
 }
 
 /**
- * @brief      This function checks if the ball object has a colision with the
- *					racket object.
+ * @brief 		This function checks if the ball object has a colision with the
+ * 				racket object.
  *
  * @param		ball A pointer on the ball object
  *
@@ -68,9 +68,9 @@ bool collision_ball_racket(object_t *ball) {
 }
 
 /**
- * @brief      This function checks if the ball object has a colision with a
- *					ghost using test_collision function. If it does, the direction
- *					of the ball is randomly changed.
+ * @brief 		This function checks if the ball object has a colision with a
+ * 				ghost using test_collision function. If it does, the direction
+ * 				of the ball is randomly changed.
  */
 void collision_ball_ghost(void) {
 	uint8_t collision_id = test_collision(0,object,1,5);
@@ -87,10 +87,10 @@ void collision_ball_ghost(void) {
 }
 
 /**
- * @brief      This function must be called when there is a colision between
- *					the bottom of the screen and the ball. It decrements the lives
- *					and checks if the player has more than 0 lives. If he does,
- *					The task sleeps 1sec. In the other case the game is finished.
+ * @brief 		This function must be called when there is a colision between
+ * 				the bottom of the screen and the ball. It decrements the lives
+ * 				and checks if the player has more than 0 lives. If he does,
+ * 				The task sleeps 1sec. In the other case the game is finished.
  */
 void lost_ball(void) {
 	lives--;
@@ -106,10 +106,10 @@ void lost_ball(void) {
 }
 
 /**
- * @brief      This function is the ball task manage by the RTOS. It waits on a
- *					semaphore as long as the game has not started. When it does, the
- *					ball moves its position every 10ms and calls all the function of
- *					collision check.
+ * @brief 		This function is the ball task manage by the RTOS. It waits on a
+ * 				semaphore as long as the game has not started. When it does, the
+ * 				ball moves its position every 10ms and calls all the function of
+ * 				collision check.
  *
  * @param      arg   A void pointer
  */

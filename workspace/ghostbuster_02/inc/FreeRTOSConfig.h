@@ -80,7 +80,7 @@
 #define configUSE_CO_ROUTINES 		0
 #define configUSE_MUTEXES			0
 #define configHEPIA_TRACING			1
-#define configUSE_IDLE_HOOK			0
+#define configUSE_IDLE_HOOK			1
 
 #if configHEPIA_TRACING
 // TRACE WITHOUT TRACING TASK:

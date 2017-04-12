@@ -12,6 +12,7 @@
 
 // definition of the synchronisation word defining the start of each trace
 #define SYNCHRO_WORD 0x55
+#define BUFFER_SIZE	1024
 
 /* Description: initialize UART0 and specified timer for traces. If enabled,
  *              the interrupts occur after each trace sending.

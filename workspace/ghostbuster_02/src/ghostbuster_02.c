@@ -16,7 +16,6 @@ int main(void) {
 	init_rnd32(100);
 	init_lcd();
 	clear_screen(LCD_BLACK);
-	init_traces(115200, 1, true);		// to be removed if you implement your own traces
 	init_game();
 	while(1);
 	return 1;

@@ -14,7 +14,7 @@
 #include "object.h"
 
 /**
- * @brief      This function will initalize an object.
+ * @brief 		This function will initalize an object.
  */
 object_t init_object(int x, int y, int radius, int dir, bool active) {
 	object_t object = {x, y, radius, dir, active};
@@ -22,10 +22,10 @@ object_t init_object(int x, int y, int radius, int dir, bool active) {
 }
 
 /**
- * @brief      This function moves an object depending on its direction. It uses
- *					the inline functions of object.h header file.
+ * @brief 		This function moves an object depending on its direction. It uses
+ * 				the inline functions of object.h header file.
  *
- * @ param		object Pointer on the object to move.
+ * @ param 		object Pointer on the object to move.
  */
 void move_object(object_t *object) {
 	switch(object->dir) {
