@@ -1,13 +1,13 @@
 /**
- * @file 		game.c
- * @brief      This file contains all the functions to manage the game
+ * @file		game.c
+ * @brief		This file contains all the functions to manage the game
  *
- * @author     Steven Liatti
- * @author     Orphée Antoniadis
- * @author     Raed Abdennadher
- * @bug        No known bugs.
- * @date       April 8, 2017
- * @version    1.0
+ * @author		Steven Liatti
+ * @author		Orphée Antoniadis
+ * @author		Raed Abdennadher
+ * @bug			No known bugs.
+ * @date		April 12, 2017
+ * @version		1.0
  */
 
 #include "game.h"
@@ -74,6 +74,7 @@ void init_game(void) {
 
 	init_ball();
 	init_racket();
+	init_ghosts();
 	menu(DISPLAY);
 
 	xTaskCreate(game_task, (signed portCHAR*)"Game Task",
@@ -82,19 +83,16 @@ void init_game(void) {
 			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
 			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
-	if (!TEST_MODE) {
-		init_ghosts();
-		xTaskCreate(ghost1_task, (signed portCHAR*)"Ghost 1 Task",
-				configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
-		xTaskCreate(ghost2_task, (signed portCHAR*)"Ghost 2 Task",
-				configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
-		xTaskCreate(ghost3_task, (signed portCHAR*)"Ghost 3 Task",
-				configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
-		xTaskCreate(ghost4_task, (signed portCHAR*)"Ghost 4 Task",
-				configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
-		xTaskCreate(ghost5_task, (signed portCHAR*)"Ghost 5 Task",
-				configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
-	}
+	xTaskCreate(ghost1_task, (signed portCHAR*)"Ghost 1 Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
+	xTaskCreate(ghost2_task, (signed portCHAR*)"Ghost 2 Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
+	xTaskCreate(ghost3_task, (signed portCHAR*)"Ghost 3 Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
+	xTaskCreate(ghost4_task, (signed portCHAR*)"Ghost 4 Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
+	xTaskCreate(ghost5_task, (signed portCHAR*)"Ghost 5 Task",
+			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
 
 	stopTimer(TIMER0);
 	startTimer(TIMER0);

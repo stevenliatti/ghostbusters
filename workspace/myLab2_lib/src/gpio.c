@@ -25,8 +25,7 @@ void Led8SetState (uint8_t value) {
 }
 
 uint8_t JoystickGetState (uint8_t pos) {
-	LPC_GPIO1->FIODIR |= 1 << pos;
-	LPC_GPIO1->FIODIR ^= 1 << pos;
+	LPC_GPIO1->FIODIR &= ~(1 << pos);
 	LPC_GPIO1->FIOMASK = ~(1 << pos);
 	uint8_t state = !(LPC_GPIO1->FIOPIN >> pos);
 	LPC_GPIO1->FIOMASK = 0;

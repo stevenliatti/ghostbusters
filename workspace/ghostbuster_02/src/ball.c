@@ -1,13 +1,13 @@
 /**
  * @file 		ball.c
- * @brief      This file contains all the functions to manage the ball
+ * @brief		This file contains all the functions to manage the ball
  *
- * @author     Steven Liatti
- * @author     Orphée Antoniadis
- * @author     Raed Abdennadher
- * @bug        No known bugs.
- * @date       April 8, 2017
- * @version    1.0
+ * @author		Steven Liatti
+ * @author		Orphée Antoniadis
+ * @author		Raed Abdennadher
+ * @bug			No known bugs.
+ * @date		April 12, 2017
+ * @version		1.0
  */
 
 #include "game.h"

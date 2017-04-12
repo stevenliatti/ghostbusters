@@ -1,13 +1,13 @@
 /**
  * @file 		object.h
- * @brief      This file is the header file of the object management.
+ * @brief		This file is the header file of the object management.
  *
- * @author     Steven Liatti
- * @author     Orphée Antoniadis
- * @author     Raed Abdennadher
- * @bug        No known bugs.
- * @date       April 8, 2017
- * @version    1.0
+ * @author		Steven Liatti
+ * @author		Orphée Antoniadis
+ * @author		Raed Abdennadher
+ * @bug			No known bugs.
+ * @date		April 12, 2017
+ * @version		1.0
  */
 
 #ifndef _OBJECT_H_

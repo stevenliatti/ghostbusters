@@ -1,19 +1,18 @@
-
-/*
- * Description: trace management using UART
- * Created on : 23.3.2017
- * Author     : VP
+/**
+ * @file		trace_mgt.c
+ * @brief		This file contains all the functions to manage the traces
+ *
+ * @author		Steven Liatti
+ * @author		Orphée Antoniadis
+ * @author		Raed Abdennadher
+ * @bug			No known bugs.
+ * @date		April 12, 2017
+ * @version		1.0
  */
-#ifdef __USE_CMSIS
-#include "LPC17xx.h"
-#endif
-#include <traces_ref.h>
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "semphr.h"
-#include "uart.h"
-#include "timer.h"
+
+#include "game.h"
+
+#define BUFFER_SIZE	1024
 
 struct {
 	trace_t buffer[BUFFER_SIZE];
@@ -21,11 +20,23 @@ struct {
 	uint8_t write;
 } circ_buffer = {{},0,0};
 
-/* Description: write a trace to a memory buffer. Note that this function is
+/**
+ * @brief 		Task with the lower priority. Note that configUSE_IDLE_HOOK
+ * 				must be set to 1 in FreeRTOSConfig.h to activate this task.
+ */
+void vApplicationIdleHook(void) {
+	while (circ_buffer.read != circ_buffer.write) {
+		uart0_send((uint8_t*)&circ_buffer.buffer[circ_buffer.read], 8);
+		circ_buffer.read = (circ_buffer.read + 1) % BUFFER_SIZE;
+	}
+}
+
+/**
+ * @brief 		Write a trace to a memory buffer. Note that this function is
  *              automatically called by FreeRTOS in privileged mode.
  *
- * Parameters: trace_id: trace ID. Usually the task number in FreeRTOS.
- *             val: 1 if task becomes active, 0 otherwise
+ * @param		trace_id: trace ID. Usually the task number in FreeRTOS.
+ * @param		val: 1 if task becomes active, 0 otherwise
  */
 void write_trace(uint8_t trace_id, short val) {
 	trace_t trace;
@@ -36,14 +47,3 @@ void write_trace(uint8_t trace_id, short val) {
 	circ_buffer.buffer[circ_buffer.write] = trace;
 	circ_buffer.write = (circ_buffer.write + 1) % BUFFER_SIZE;
 }
-
-
-
-void vApplicationIdleHook(void) {
-	while (circ_buffer.read != circ_buffer.write) {
-		uart0_send((uint8_t*)&circ_buffer.buffer[circ_buffer.read], 8);
-		circ_buffer.read = (circ_buffer.read + 1) % BUFFER_SIZE;
-	}
-}
-
-
