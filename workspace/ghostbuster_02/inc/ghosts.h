@@ -27,6 +27,10 @@ typedef struct {
 
 void display_ghosts(ghost_t *ghost);
 int init_ghosts(void);
+bool ghost_left_collision(object_t *object);
+bool ghost_right_collision(object_t *object);
+bool ghost_up_collision(object_t *object);
+bool ghost_down_collision(object_t *object);
 void ghost1_task(void *arg);
 void ghost2_task(void *arg);
 void ghost3_task(void *arg);

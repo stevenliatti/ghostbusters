@@ -10,6 +10,8 @@
 
 #include "game.h"
 
+#define RACKET_STEP	2	// moving step for racket
+
 // structure containing racket position, width and height
 typedef struct {
 	int x;

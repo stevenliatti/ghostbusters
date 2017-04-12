@@ -54,7 +54,7 @@
 #define BALL_INIT_X		120
 #define BALL_INIT_Y		299
 
-#define RACKET_INIT_X	110	// racket initial y
+#define RACKET_INIT_X	110	// racket initial x
 #define RACKET_INIT_Y	299	// racket initial y
 #define RACKET_WIDTH	30	// racket width
 #define RACKET_HEIGHT	4	// racket height

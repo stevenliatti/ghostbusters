@@ -14,11 +14,11 @@ void init_racket() {
 }
 
 void move_racket(uint8_t pos) {
-	if (pos == RIGHT && (racket.x + racket.width < LCD_MAX_WIDTH - STEP)) {
-		racket.x += STEP;
+	if (pos == RIGHT && (racket.x + racket.width < LCD_MAX_WIDTH - RACKET_STEP)) {
+		racket.x += RACKET_STEP;
 	}
 	if (pos == LEFT && (racket.x > 0)) {
-		racket.x -= STEP;
+		racket.x -= RACKET_STEP;
 	}
 }
 

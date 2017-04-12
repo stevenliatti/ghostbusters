@@ -14,6 +14,10 @@
 #define _BALL_H_
 
 void init_ball(void);
+bool left_collision(object_t *object);
+bool right_collision(object_t *object);
+bool up_collision(object_t *object);
+bool down_collision(object_t *object);
 bool collision_ball_racket(object_t *object);
 void ball_task(void *arg);
 
