@@ -15,9 +15,22 @@ void clear_ghost(int x, int y) {
 	lcd_filled_rectangle(x, y, x + ghost_width, y + ghost_height, LCD_BLACK);
 }
 
-//void update_position(ghost_t *ghost) {
-//
-//}
+void update_ghost(ghost_t *ghost, uint16_t x, uint16_t y) {
+	switch(ghost->obj->dir) {
+		case NORTH:
+			lcd_filled_rectangle(x, y + ghost_height - STEP, x + ghost_width, y + ghost_height, LCD_BLACK);
+			break;
+		case SOUTH:
+			lcd_filled_rectangle(x, y, x + ghost_width, y + STEP, LCD_BLACK);
+			break;
+		case WEST:
+			lcd_filled_rectangle(x + ghost_width - STEP, y, x + ghost_width, y + ghost_height, LCD_BLACK);
+			break;
+		case EAST:
+			lcd_filled_rectangle(x, y, x + STEP, y + ghost_height, LCD_BLACK);
+			break;
+	}
+}
 
 int rand_direction() {
 	return rnd_32() % sizeof(direction_map);
@@ -75,14 +88,15 @@ void ghost_ghost_collision(int id) {
 void func_ghost_task(ghost_t *ghost) {
 	uint8_t change_dir = 0;
 	uint8_t random;
+	uint16_t x, y;
 	while(1) {
 		while(ghost->obj->active) {
 			if (change_dir == 100) {
 				ghost->obj->dir = direction_map[rand_direction()];
 				change_dir = 0;
 			}
-			int x = ghost->obj->x;
-			int y = ghost->obj->y;
+			x = ghost->obj->x;
+			y = ghost->obj->y;
 			ghost_ghost_collision(ghost->id);
 			display_ghost(ghost);
 			if (ghost_left_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
@@ -91,7 +105,8 @@ void func_ghost_task(ghost_t *ghost) {
 			if (ghost_down_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
 			move_object(ghost->obj);
 			SLEEP(ghost->speed);
-			clear_ghost(x, y);
+			if (ghost->obj->active) update_ghost(ghost, x, y);
+			else clear_ghost(x, y);
 			change_dir++;
 		}
 		SLEEP(20);
