@@ -22,7 +22,7 @@ typedef struct {
 	int id;
 	object_t *obj;
 	uint16_t *image;
-	char index_img;
+	uint8_t index_img;
 	int speed;
 } ghost_t;
 

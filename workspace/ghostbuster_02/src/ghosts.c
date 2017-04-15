@@ -66,7 +66,7 @@ void init_bmp_dir_ghost(direction dir, ghost_t *ghost) {
 }
 
 void animate(ghost_t *ghost) {
-	bool inverse = !ghost->index_img % 2;
+	uint8_t inverse = !ghost->index_img % 2;
 	ghost->index_img = inverse;
 	switch (ghost->obj->dir) {
 		case NORTH:
