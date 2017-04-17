@@ -15,7 +15,10 @@
 #define ARRAY_BMP_SIZE 2
 
 // pointers on the ghosts bitmaps. 2 images by ghost direction.
-__DATA(RAM2) uint16_t *ghost_im_left[ARRAY_BMP_SIZE], *ghost_im_right[ARRAY_BMP_SIZE], *ghost_im_center[ARRAY_BMP_SIZE];
+__DATA(RAM2) uint16_t *ghost_im_up[ARRAY_BMP_SIZE];
+__DATA(RAM2) uint16_t *ghost_im_left[ARRAY_BMP_SIZE];
+__DATA(RAM2) uint16_t *ghost_im_right[ARRAY_BMP_SIZE];
+__DATA(RAM2) uint16_t *ghost_im_down[ARRAY_BMP_SIZE];
 
 /**
  * @brief       Return the x ghost's position on the screen.
@@ -84,8 +87,10 @@ uint8_t rand_direction() {
  * @return      0 if success, -1 otherwise
  */
 uint8_t init_bmp_ghost() {
-	if ((ghost_im_center[0] = read_bmp_file("ghost_c1.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
-	if ((ghost_im_center[1] = read_bmp_file("ghost_c2.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_down[0] = read_bmp_file("ghost_d1.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_down[1] = read_bmp_file("ghost_d2.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_up[0] = read_bmp_file("ghost_u1.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
+	if ((ghost_im_up[1] = read_bmp_file("ghost_u2.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
 	if ((ghost_im_left[0] = read_bmp_file("ghost_l1.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
 	if ((ghost_im_left[1] = read_bmp_file("ghost_l2.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
 	if ((ghost_im_right[0] = read_bmp_file("ghost_r1.bmp", &ghost_width, &ghost_height)) == NULL) { return -1; }
@@ -102,10 +107,10 @@ uint8_t init_bmp_ghost() {
 void init_bmp_dir_ghost(direction dir, ghost_t *ghost) {
 	switch (dir) {
 		case NORTH:
-			ghost->image = ghost_im_center[0];
+			ghost->image = ghost_im_up[0];
 			break;
 		case SOUTH:
-			ghost->image = ghost_im_center[0];
+			ghost->image = ghost_im_down[0];
 			break;
 		case WEST:
 			ghost->image = ghost_im_left[0];
@@ -128,10 +133,10 @@ void animate(ghost_t *ghost) {
 	ghost->index_img = inverse;
 	switch (ghost->obj->dir) {
 		case NORTH:
-			ghost->image = ghost_im_center[inverse];
+			ghost->image = ghost_im_up[inverse];
 			break;
 		case SOUTH:
-			ghost->image = ghost_im_center[inverse];
+			ghost->image = ghost_im_down[inverse];
 			break;
 		case WEST:
 			ghost->image = ghost_im_left[inverse];
