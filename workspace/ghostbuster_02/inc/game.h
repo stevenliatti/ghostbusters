@@ -1,6 +1,6 @@
 /**
  * @file 		game.h
- * @brief		This is the header of the game mangement.
+ * @brief		This is the header of the game management.
  *
  * @author		Steven Liatti
  * @author		Orphée Antoniadis
@@ -46,21 +46,24 @@
 #include "ghosts.h"
 #include "racket.h"
 
-#define DISPLAY 		LCD_WHITE
-#define	ERASE			LCD_BLACK
+#define FONT_COLOR			LCD_WHITE
+#define BACKGROUND_COLOR	LCD_BLACK
 
-#define NO_COLLISION	0
-#define GHOST_NB 		5
-#define BALL_RADIUS		3
-#define BALL_INIT_X		120
-#define BALL_INIT_Y		299
+#define NO_COLLISION		0
+#define GHOST_NB 			5
+#define LIVES_NB			3
+#define BALL_RADIUS			3
+#define BALL_INIT_X			120
+#define BALL_INIT_Y			299
 
-#define RACKET_INIT_X	110	// racket initial x
-#define RACKET_INIT_Y	299	// racket initial y
-#define RACKET_WIDTH	30	// racket width
-#define RACKET_HEIGHT	4	// racket height
+#define RACKET_COLOR		LCD_GREEN
+#define RACKET_INIT_X		110	// racket initial x
+#define RACKET_INIT_Y		299	// racket initial y
+#define RACKET_WIDTH		30	// racket width
+#define RACKET_HEIGHT		4	// racket height
 
 #define SLEEP(mseconds)	vTaskDelay(mseconds / portTICK_RATE_MS)
+#define TASK_CREATE(function, name, args, priority) xTaskCreate(function, (signed portCHAR*)name, configMINIMAL_STACK_SIZE, args, priority, NULL)
 
 // global variables
 uint8_t lives;

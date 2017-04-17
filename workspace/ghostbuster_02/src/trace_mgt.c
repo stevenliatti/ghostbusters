@@ -12,8 +12,11 @@
 
 #include "game.h"
 
-#define BUFFER_SIZE	1024
+#define BUFFER_SIZE	256
 
+/**
+ * @brief       This structure describe a circular buffer, with the read and write pointer.
+ */
 struct {
 	trace_t buffer[BUFFER_SIZE];
 	uint8_t read;

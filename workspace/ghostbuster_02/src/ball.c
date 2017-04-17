@@ -21,36 +21,44 @@ void init_ball(void) {
 	ball = &object[0];
 }
 
+/**
+ * @brief       Indicate if the ball touch the left part of the screen.
+ *
+ * @param       object The ball in the array of objects
+ */
 bool left_collision(object_t *object) {
 	return object->x <= object->radius + STEP && object->dir & WEST;
 }
 
+/**
+ * @brief       Indicate if the ball touch the right part of the screen.
+ *
+ * @param       object The ball in the array of objects
+ */
 bool right_collision(object_t *object) {
 	return object->x >= (LCD_MAX_WIDTH - object->radius - STEP) && object->dir & EAST;
 }
 
+/**
+ * @brief       Indicate if the ball touch the top part of the screen.
+ *
+ * @param       object The ball in the array of objects
+ */
 bool up_collision(object_t *object) {
 	return object->y <= object->radius + STEP && object->dir & NORTH;
 }
 
+/**
+ * @brief       Indicate if the ball touch the bottom part of the screen.
+ *
+ * @param       object The ball in the array of objects
+ */
 bool down_collision(object_t *object) {
 	return object->y >= (LCD_MAX_HEIGHT - object->radius - STEP) && object->dir & SOUTH;
 }
 
 /**
- * @brief		This function checks if the ball object has a colision with the
- * 				wall (the border of the screen). If it does, the direction of
- * 				the ball is inversed.
- */
-void collision_ball_wall(void) {
-	if (left_collision(ball)) ball->dir ^= (WEST | EAST);
-	if (right_collision(ball)) ball->dir ^= (WEST | EAST);
-	if (up_collision(ball)) ball->dir ^= (NORTH | SOUTH);
-	if (collision_ball_racket(ball)) ball->dir ^= (NORTH | SOUTH);
-}
-
-/**
- * @brief 		This function checks if the ball object has a colision with the
+ * @brief 		This function checks if the ball object has a collision with the
  * 				racket object.
  *
  * @param		ball A pointer on the ball object
@@ -68,7 +76,19 @@ bool collision_ball_racket(object_t *ball) {
 }
 
 /**
- * @brief 		This function checks if the ball object has a colision with a
+ * @brief		This function checks if the ball object has a collision with the
+ * 				wall (the border of the screen). If it does, the direction of
+ * 				the ball is inverted.
+ */
+void collision_ball_wall(void) {
+	if (left_collision(ball)) ball->dir ^= (WEST | EAST);
+	if (right_collision(ball)) ball->dir ^= (WEST | EAST);
+	if (up_collision(ball)) ball->dir ^= (NORTH | SOUTH);
+	if (collision_ball_racket(ball)) ball->dir ^= (NORTH | SOUTH);
+}
+
+/**
+ * @brief 		This function checks if the ball object has a collision with a
  * 				ghost using test_collision function. If it does, the direction
  * 				of the ball is randomly changed.
  */
@@ -82,19 +102,19 @@ void collision_ball_ghost(void) {
 		ball->dir = (temp[random] | temp[random + 2]);
 		object[collision_id].active = false;
 		score+=10;
-		menu(DISPLAY);
+		menu(FONT_COLOR);
 	}
 }
 
 /**
- * @brief 		This function must be called when there is a colision between
+ * @brief 		This function must be called when there is a collision between
  * 				the bottom of the screen and the ball. It decrements the lives
  * 				and checks if the player has more than 0 lives. If he does,
  * 				The task sleeps 1sec. In the other case the game is finished.
  */
 void lost_ball(void) {
 	lives--;
-	menu(DISPLAY);
+	menu(FONT_COLOR);
 	init_ball();
 	ball->active = true;
 	if (lives == 0) {

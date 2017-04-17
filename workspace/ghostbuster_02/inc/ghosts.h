@@ -1,11 +1,14 @@
-/*
-===============================================================================
- Name        : object.h
- Author      : R. Abdennadher & O. Antoniadis & S. Liatti
- Copyright   : HES-SO hepia
- Year        : 2016-2017
-===============================================================================
-*/
+/**
+ * @file 		ghosts.h
+ * @brief		This is the header of the ghosts management.
+ *
+ * @author		Steven Liatti
+ * @author		Orphée Antoniadis
+ * @author		Raed Abdennadher
+ * @bug			No known bugs.
+ * @date		April 12, 2017
+ * @version		1.0
+ */
 
 #ifndef _GHOSTS_H_
 #define _GHOSTS_H_
@@ -18,19 +21,19 @@
 
 #define Y_START 150
 
+/**
+ * @brief       This structure represent a ghost, with an id, a pointer on a bouncing object,
+ *              a pointer on a bmp image, an "image selector" and his own speed in the game.
+ */
 typedef struct {
-	int id;
+	uint8_t id;
 	object_t *obj;
 	uint16_t *image;
-	char index_img;
-	int speed;
+	uint8_t index_img;
+	uint32_t speed;
 } ghost_t;
 
 int init_ghosts(void);
 void ghost_task(void *arg);
-bool ghost_left_collision(object_t *object);
-bool ghost_right_collision(object_t *object);
-bool ghost_up_collision(object_t *object);
-bool ghost_down_collision(object_t *object);
 
 #endif /* _GHOSTS_H_ */

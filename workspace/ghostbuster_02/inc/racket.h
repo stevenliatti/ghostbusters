@@ -1,8 +1,13 @@
-/*
- * racket.h
+/**
+ * @file 		racket.h
+ * @brief		This is the header of the racket management.
  *
- *  Created on: 5 avr. 2017
- *      Author: raed
+ * @author		Steven Liatti
+ * @author		Orphée Antoniadis
+ * @author		Raed Abdennadher
+ * @bug			No known bugs.
+ * @date		April 12, 2017
+ * @version		1.0
  */
 
 #ifndef RACKET_H_
@@ -24,7 +29,6 @@ typedef struct {
 racket_t racket;
 
 void init_racket();
-void move_racket(uint8_t pos);
 void racket_task(void *arg);
 
 #endif /* RACKET_H_ */

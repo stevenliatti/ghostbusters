@@ -16,14 +16,14 @@
  * @brief 		This function will display what we call the menu of the game
  * 				(the number of lives and the score of the player).
  *
- * @param 		mode   DISPLAY or ERASE (print the menu or erase it)
+ * @param 		mode   The color to apply
  */
 void menu(uint32_t mode) {
 	char lives_string[10], score_string[10];
 	sprintf(lives_string, "Lives : %d", lives);
 	sprintf(score_string, "Score : %d", score);
-	lcd_print(40, 305, SMALLFONT, mode, LCD_BLACK, lives_string);
-	lcd_print(140, 305, SMALLFONT, mode, LCD_BLACK, score_string);
+	lcd_print(40, 305, SMALLFONT, mode, BACKGROUND_COLOR, lives_string);
+	lcd_print(140, 305, SMALLFONT, mode, BACKGROUND_COLOR, score_string);
 }
 
 /**
@@ -34,11 +34,11 @@ void menu(uint32_t mode) {
  */
 void check_start(uint8_t joystick_pos) {
 	if (joystick_pos == CENTER) {
-		menu(ERASE);
-		lives = 3;
+		menu(BACKGROUND_COLOR);
+		lives = LIVES_NB;
 		score = 0;
 		ball->active = true;
-		menu(DISPLAY);
+		menu(FONT_COLOR);
 	}
 }
 
@@ -74,30 +74,20 @@ void init_game(void) {
 
 	init_ball();
 	init_racket();
-	init_ghosts();
-	menu(DISPLAY);
-
-	xTaskCreate(game_task, (signed portCHAR*)"Game Task",
-			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
-	xTaskCreate(ball_task, (signed portCHAR*)"Ball Task",
-			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
-	xTaskCreate(racket_task, (signed portCHAR*)"Racket Task",
-			configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1,NULL);
-
 	if (init_ghosts() == -1) {
-		printf("error");
+		printf("init_ghosts error");
 		while(1);
 	}
-	xTaskCreate(ghost_task, (signed portCHAR*)"Ghost 1 Task",
-			configMINIMAL_STACK_SIZE, &ghosts[0], tskIDLE_PRIORITY+1,NULL);
-	xTaskCreate(ghost_task, (signed portCHAR*)"Ghost 2 Task",
-			configMINIMAL_STACK_SIZE, &ghosts[1], tskIDLE_PRIORITY+1,NULL);
-	xTaskCreate(ghost_task, (signed portCHAR*)"Ghost 3 Task",
-			configMINIMAL_STACK_SIZE, &ghosts[2], tskIDLE_PRIORITY+1,NULL);
-	xTaskCreate(ghost_task, (signed portCHAR*)"Ghost 4 Task",
-			configMINIMAL_STACK_SIZE, &ghosts[3], tskIDLE_PRIORITY+1,NULL);
-	xTaskCreate(ghost_task, (signed portCHAR*)"Ghost 5 Task",
-			configMINIMAL_STACK_SIZE, &ghosts[4], tskIDLE_PRIORITY+1,NULL);
+	menu(FONT_COLOR);
+
+	TASK_CREATE(game_task, "Game Task", NULL, tskIDLE_PRIORITY + 1);
+	TASK_CREATE(ball_task, "Ball Task", NULL, tskIDLE_PRIORITY + 1);
+	TASK_CREATE(racket_task, "Racket Task", NULL, tskIDLE_PRIORITY + 1);
+	char task_name[15];
+	for (int i = 0; i < GHOST_NB; i++) {
+		sprintf(task_name, "Ghost %d Task", i + 1);
+		TASK_CREATE(ghost_task, task_name, &ghosts[i], tskIDLE_PRIORITY + 1);
+	}
 
 	stopTimer(TIMER0);
 	startTimer(TIMER0);

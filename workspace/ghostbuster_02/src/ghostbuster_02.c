@@ -12,10 +12,13 @@
 
 #include "game.h"
 
+/**
+ * @brief		Entry point of the program.
+ */
 int main(void) {
 	init_rnd32(100);
 	init_lcd();
-	clear_screen(LCD_BLACK);
+	clear_screen(BACKGROUND_COLOR);
 	init_game();
 	while(1);
 	return 1;
