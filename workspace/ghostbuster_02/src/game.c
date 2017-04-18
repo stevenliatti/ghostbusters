@@ -18,12 +18,12 @@
  *
  * @param 		mode   The color to apply
  */
-void menu(uint32_t mode) {
+void menu(uint32_t color) {
 	char lives_string[10], score_string[10];
 	sprintf(lives_string, "Lives : %d", lives);
 	sprintf(score_string, "Score : %d", score);
-	lcd_print(40, 305, SMALLFONT, mode, BACKGROUND_COLOR, lives_string);
-	lcd_print(140, 305, SMALLFONT, mode, BACKGROUND_COLOR, score_string);
+	lcd_print(40, 305, SMALLFONT, color, BACKGROUND_COLOR, lives_string);
+	lcd_print(140, 305, SMALLFONT, color, BACKGROUND_COLOR, score_string);
 }
 
 /**
