@@ -84,7 +84,8 @@ void init_game(void) {
 	TASK_CREATE(ball_task, "Ball Task", NULL, tskIDLE_PRIORITY + 1);
 	TASK_CREATE(racket_task, "Racket Task", NULL, tskIDLE_PRIORITY + 1);
 	char task_name[15];
-	for (int i = 0; i < GHOST_NB; i++) {
+	int i;
+	for (i = 0; i < GHOST_NB; i++) {
 		sprintf(task_name, "Ghost %d Task", i + 1);
 		TASK_CREATE(ghost_task, task_name, &ghosts[i], tskIDLE_PRIORITY + 1);
 	}

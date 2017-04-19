@@ -171,7 +171,8 @@ void init_ghost(uint8_t ghost_id) {
  */
 int init_ghosts() {
 	if (init_bmp_ghost() == -1) { return -1; }
-	for (int i = 1; i <= GHOST_NB; ++i) { init_ghost(i); }
+	int i;
+	for (i = 1; i <= GHOST_NB; ++i) { init_ghost(i); }
 	return 0;
 }
 
