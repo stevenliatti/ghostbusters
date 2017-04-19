@@ -74,7 +74,7 @@ uint16_t ghost_width, ghost_height;
 ghost_t ghosts[GHOST_NB];
 xSemaphoreHandle sem_ball, sem_game;
 
-void menu(uint32_t mode);
+void menu(uint32_t color);
 void init_game(void);
 
 #endif /* _GAME_H_ */

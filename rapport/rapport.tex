@@ -1,6 +1,6 @@
 \documentclass[a4paper]{article}
-\title{TP1 : Ghostbusters\protect\\ Programmation temps-réel}
-\author{Orphée Antoniadis \and Raed Abdennadher \and Steven Liatti}
+\title{TP1 : Ghostbusters \protect\\ Programmation temps-réel}
+\author{Groupe 2 \\ Orphée Antoniadis \hspace{0.5cm} Raed Abdennadher \hspace{0.5cm} Steven Liatti}
 \usepackage[francais]{babel}
 \usepackage{fontspec}
 \usepackage{amsmath}
@@ -17,44 +17,51 @@
 
 \section{Introduction}
 Le but de ce travail était de réaliser un jeu qui est un mélange entre deux
-anciens jeux vidéo : le Pacman et le Casse-brique. Il s’agit ici de faire
-évoluer des « fantômes » sur une partie de l’écran de façon aléatoire et de
-tenter d’en toucher un maximum avec une balle qui rebondit sur tout ce qu’elle
-touche. Lorsque la balle touche un fantôme, le score du joueur augmente et le
-fantôme touché disparaît. Les fantômes rebondissent aussi entre eux lorsqu’ils
-se touchent (mais sans disparaître). En bas de l’écran, une raquette dirigée par
-l’utilisateur permet de faire rebondir la balle pour lui éviter de « tomber ».
-Dans ce dernier cas, celle-ci est perdue. 3 essais, c’est-à-dire 3 pertes de
-balles sont admises. Au-delà, le jeu s’arrête et affiche un score équivalent
-au nombre de fantômes touchés pendant la partie.
+anciens jeux vidéo : le Pacman et le Casse-brique. L'objectif était d'apprendre
+à utiliser un RTOS et de comprendre son fonctionnement en mode coopératif. Pour
+se faire nous avions à disposition la carte Mylab2 accompagnée de la librairie
+FreeRTOS contenant les primitives du RTOS ainsi que la librairie myLab\_lib contenant
+des fonctions utilitaires pour communiquer avec les périphériques de la carte.
 
-\section{Objectif pédagogique}
-L'objectif de ce tp était d'apprendre à utiliser un RTOS et de comprendre son
-fonctionnement. Pour se faire nous avions à disposition la carte Mylab2 accompagnée
-de la librairie FreeRTOS contenant les primitives du RTOS ainsi que la librairie
-myLab\_lib contenant des fonctions utilitaires pour communiquer avec les périphériques
-de la carte.
+\section{Intêret de l'utilisation d'un RTOS}
+%Steven ?
+*Expliquez brièvement, selon vous, l’intérêt à utiliser un RTOS dans le cadre de ce projet.
 
 \section{Structure du programme}
+%Raed ?
 *faire un shéma bloc*
 
 \section{Description des tâches}
-	\subsection{Gestion du jeu}
-	\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=53,lastline=64]{C}{../workspace/ghostbuster_02/src/game.c}
-	Lorsque la partie commence, le joueur dois appuyer sur le joystick pour
-	commencer le jeu et lancer la balle. C'est cette tâche qui s'occupe de la
-	gestion de cette fonctionnalité. Pour détécter la pression du joystick, nous avons
-	été obligé de passer par une attente "semi-passive". La tâche va vérifier toutes
-	les 10ms l'état du joystick puis se mettre en attente passive et laisser la main
-	aux autres tâches. Lorsque la joystick est appuyé, la tâche initialise le nombre
-	de vies ainsi que le score du joueur, sort de sa boucle, débloque le sémaphore
-	sur lequel attendait la tâche de la balle puis attend lui  même sur un autre
-	sémaphore qui sera débloqué lorsque le joueur aura perdu la balle 3 fois.
+\subsection{Gestion du jeu}
+\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=53,lastline=64]{C}{../workspace/ghostbuster_02/src/game.c}
+Lorsque la partie commence, le joueur dois appuyer sur le joystick pour
+commencer le jeu et lancer la balle. C'est cette tâche qui s'occupe de la
+gestion de cette fonctionnalité. Pour détécter la pression du joystick, nous avons
+été obligé de passer par une attente "semi-passive". La tâche va vérifier toutes
+les 10ms l'état du joystick puis se mettre en attente passive et laisser la main
+aux autres tâches. Lorsque la joystick est appuyé, la tâche initialise le nombre
+de vies ainsi que le score du joueur, sort de sa boucle, débloque le sémaphore
+sur lequel attendait la tâche de la balle puis attend lui  même sur un autre
+sémaphore qui sera débloqué lorsque le joueur aura perdu la balle 3 fois.
 
-	\subsection{Déplacement des fantômes}
+\subsection{Gestion de la balle}
+\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=136,lastline=152]{C}{../workspace/ghostbuster_02/src/ball.c}
+%Orphée ?
 
-	\subsection{Gestion de la balle}
+\subsection{Déplacement des fantômes}
+\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=236,lastline=271]{C}{../workspace/ghostbuster_02/src/ghosts.c}
+%Steven ?
 
-	\subsection{Gestion de la raquette}
+\subsection{Gestion de la raquette}
+\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=40,lastline=56]{C}{../workspace/ghostbuster_02/src/racket.c}
+%Raed ?
+
+\section{Analyse des traces}
+%Tous les 3 ?
+
+\section{Limite du nombre de fantômes}
+%Tous les 3 ?
+
+
 
 \end{document}
