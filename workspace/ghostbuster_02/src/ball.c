@@ -67,12 +67,50 @@ bool down_collision(object_t *object) {
  */
 bool collision_ball_racket(object_t *ball) {
 	if (ball->y + ball->radius == RACKET_INIT_Y - 1 && ball->dir & SOUTH) {
-			if (ball->x + ball->radius > racket.x - 2 &&
-					ball->x - ball->radius < racket.x + racket.width + 2) {
+		if (ball->x + ball->radius > racket.x - 2 &&
+				ball->x - ball->radius < racket.x + racket.width + 2) {
 			return true;
-			}
 		}
-		return false;
+	}
+	return false;
+}
+
+/**
+ * @brief 		This function checks if the ball object has a collision with the
+ * 				racket object on the left side.
+ *
+ * @param		ball A pointer on the ball object
+ *
+ * @return		true or false
+ */
+bool collision_ball_racket_leftside(object_t *ball) {
+	if (ball->dir == (SOUTH | EAST) &&
+			ball->y + ball->radius > RACKET_INIT_Y - 1 &&
+			ball->y - ball->radius < racket.y + racket.height) {
+		if (ball->x + ball->radius == racket.x - 1) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * @brief 		This function checks if the ball object has a collision with the
+ * 				racket object on the right side.
+ *
+ * @param		ball A pointer on the ball object
+ *
+ * @return		true or false
+ */
+bool collision_ball_racket_rightside(object_t *ball) {
+	if (ball->dir == (SOUTH | WEST) &&
+			ball->y + ball->radius > RACKET_INIT_Y - 1 &&
+			ball->y - ball->radius < racket.y + racket.height) {
+		if (ball->x - ball->radius == racket.x + racket.width + 3) {
+			return true;
+		}
+	}
+	return false;
 }
 
 /**
@@ -81,6 +119,8 @@ bool collision_ball_racket(object_t *ball) {
  * 				the ball is inverted.
  */
 void collision_ball_wall(void) {
+	if (collision_ball_racket_rightside(ball) || collision_ball_racket_leftside(ball))
+		ball->dir ^= (WEST | EAST);
 	if (left_collision(ball)) ball->dir ^= (WEST | EAST);
 	if (right_collision(ball)) ball->dir ^= (WEST | EAST);
 	if (up_collision(ball)) ball->dir ^= (NORTH | SOUTH);

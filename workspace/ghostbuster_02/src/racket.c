@@ -35,17 +35,50 @@ void move_racket(uint8_t pos) {
 }
 
 /**
+ * @brief       Repaint the racket after moving to the left.
+ *
+ * @param       last_x The previous racket's x position
+ * @param       last_y The previous racket's y position
+ *
+ * @return		true if the left joystick is pressed. false else
+ */
+bool joystick_left_pressed(uint16_t last_x, uint16_t last_y) {
+	if (JoystickGetState(LEFT) && racket.x > 0) {
+		lcd_filled_rectangle(last_x + racket.width - STEP, last_y, last_x + racket.width, last_y + racket.height, BACKGROUND_COLOR);
+		joystick_handler(move_racket, POLLING);
+		lcd_filled_rectangle(racket.x, racket.y, racket.x + STEP, racket.y + racket.height, RACKET_COLOR);
+		return true;
+	}
+	return false;
+}
+
+/**
+ * @brief       Repaint the racket after moving to the right.
+ *
+ * @param       last_x The previous racket's x position
+ * @param       last_y The previous racket's y position
+ *
+ * @return		true if the right joystick is pressed. false else
+ */
+bool joystick_right_pressed(uint16_t last_x, uint16_t last_y) {
+	if (JoystickGetState(RIGHT) && racket.x + racket.width < LCD_MAX_WIDTH - 2) {
+		lcd_filled_rectangle(last_x, last_y, last_x + STEP, last_y + racket.height, BACKGROUND_COLOR);
+		joystick_handler(move_racket, POLLING);
+		lcd_filled_rectangle(racket.x + racket.width - STEP, racket.y, racket.x + racket.width, racket.y + racket.height, RACKET_COLOR);
+		return true;
+	}
+	return false;
+}
+
+/**
  * @brief       Move the racket if the joystick is pressed to the left or right.
  */
 void racket_task(void *arg) {
-	int last_x = racket.x;
-	int last_y = racket.y;
+	uint16_t last_x = racket.x;
+	uint16_t last_y = racket.y;
 	lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, RACKET_COLOR);
 	while(1) {
-		if (JoystickGetState(LEFT) || JoystickGetState(RIGHT)) {
-			lcd_filled_rectangle(last_x, last_y, last_x + racket.width, last_y + racket.height, BACKGROUND_COLOR);
-			joystick_handler(move_racket, POLLING);
-			lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, RACKET_COLOR);
+		if (joystick_left_pressed(last_x, last_y) || joystick_right_pressed(last_x, last_y)) {
 			last_x = racket.x;
 			last_y = racket.y;
 			SLEEP(8);
