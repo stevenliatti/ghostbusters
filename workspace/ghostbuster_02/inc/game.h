@@ -75,7 +75,6 @@ uint32_t score;
 object_t object[GHOST_NB+1];
 object_t *ball;
 uint16_t ghost_width, ghost_height;
-uint16_t ghost_y;
 ghost_t ghosts[GHOST_NB];
 xSemaphoreHandle sem_ball, sem_game;
 
