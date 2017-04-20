@@ -218,7 +218,7 @@ bool ghost_down_collision(object_t *object) {
  *
  * @param       object The ghost's id
  */
-void ghost_ghost_collision(uint8_t id) {
+void collision_ghost_ghost(uint8_t id) {
 	uint8_t collision_id = test_collision(id, object, 1, GHOST_NB);
 	if (collision_id != 0 && object[collision_id].active) {
 		if (object[id].dir & (NORTH | SOUTH)) {
@@ -228,6 +228,13 @@ void ghost_ghost_collision(uint8_t id) {
 			object[id].dir ^= EAST | WEST;
 		}
 	}
+}
+
+void collision_ghost_wall(ghost_t *ghost) {
+	if (ghost_left_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
+	if (ghost_right_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
+	if (ghost_up_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
+	if (ghost_down_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
 }
 
 /**
@@ -253,12 +260,9 @@ void ghost_task(void *arg) {
 			}
 			x = ghost->obj->x;
 			y = ghost->obj->y;
-			ghost_ghost_collision(ghost->id);
+			collision_ghost_ghost(ghost->id);
 			display_ghost(ghost);
-			if (ghost_left_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
-			if (ghost_right_collision(ghost->obj)) ghost->obj->dir ^= (WEST | EAST);
-			if (ghost_up_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
-			if (ghost_down_collision(ghost->obj)) ghost->obj->dir ^= (NORTH | SOUTH);
+			collision_ghost_wall(ghost);
 			move_object(ghost->obj);
 			SLEEP(ghost->speed);
 			if (ghost->obj->active) update_ghost(ghost, x, y);

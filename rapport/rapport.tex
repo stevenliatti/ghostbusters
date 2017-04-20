@@ -13,7 +13,6 @@
 
 \begin{document}
 \maketitle
-\newpage
 
 \section{Introduction}
 Le but de ce travail était de réaliser un jeu qui est un mélange entre deux
@@ -45,11 +44,26 @@ sur lequel attendait la tâche de la balle puis attend lui  même sur un autre
 sémaphore qui sera débloqué lorsque le joueur aura perdu la balle 3 fois.
 
 \subsection{Gestion de la balle}
-\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=136,lastline=152]{C}{../workspace/ghostbuster_02/src/ball.c}
+\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=177,lastline=193]{C}{../workspace/ghostbuster_02/src/ball.c}
+Comme expliqué précedement, une fois que le joueur appuie sur le joystick, le sémaphore
+bloquant la tâche de la balle est débloqué et tourne entre dans une boucle tant que
+la balle est "active" (c'est-à-dire que le joueur à encore des vies). Dans cette boucle
+la tâche va d'abord dessiner la balle (un cercle de 3 de rayon ici). Elle vas ensuite vérifier
+s'il y a une collision avec les bords de l'écran, la raquette, ou un fantôme et si oui changer
+la direction direction de la balle en fonction. Les coordonées de la balle sont finalement
+incrémentées de STEP (ici STEP = 2) et la tache se met en attente passive pendant
+10ms afin de donner la main.
+\newline
+Lorsque la tâche reprend la main, la balle est effacée en redessinant un cercle
+de la couleur de fond là où était la balle. Nous vérifions ensuite s'il y a collision
+avec le bas de l'écran (donc si la balle est perdue). Si oui, le score est incrémentée,
+une vie est perdue et si le joueur est à 0 vies la balle devient "inactive". Après,
+soit la balle refait la boucle, soit elle libère la tâche de gestion du jeu et se
+rebloque elle même dépendement de si le joueur a perdu ou non.
 %Orphée ?
 
 \subsection{Déplacement des fantômes}
-\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=236,lastline=271]{C}{../workspace/ghostbuster_02/src/ghosts.c}
+\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=245,lastline=277]{C}{../workspace/ghostbuster_02/src/ghosts.c}
 %Steven ?
 
 \subsection{Gestion de la raquette}
@@ -57,7 +71,7 @@ sémaphore qui sera débloqué lorsque le joueur aura perdu la balle 3 fois.
 %Raed ?
 
 \section{Analyse des traces}
-%Tous les 3 ?
+%Orphée ?
 
 \section{Limite du nombre de fantômes}
 %Tous les 3 ?
