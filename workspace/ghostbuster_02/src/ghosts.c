@@ -47,7 +47,7 @@ void display_ghost(ghost_t *ghost) {
  * @param       y The coordinate y
  */
 void clear_ghost(uint16_t x, uint16_t y) {
-	lcd_filled_rectangle(x, y, x + ghost_width, y + ghost_height, LCD_BLACK);
+	lcd_filled_rectangle(x, y, x + ghost_width, y + ghost_height, BACKGROUND_COLOR);
 }
 
 /**
@@ -60,16 +60,16 @@ void clear_ghost(uint16_t x, uint16_t y) {
 void update_ghost(ghost_t *ghost, uint16_t x, uint16_t y) {
 	switch(ghost->obj->dir) {
 		case NORTH:
-			lcd_filled_rectangle(x, y + ghost_height - STEP, x + ghost_width, y + ghost_height, LCD_BLACK);
+			lcd_filled_rectangle(x, y + ghost_height - STEP, x + ghost_width, y + ghost_height, BACKGROUND_COLOR);
 			break;
 		case SOUTH:
-			lcd_filled_rectangle(x, y, x + ghost_width, y + STEP, LCD_BLACK);
+			lcd_filled_rectangle(x, y, x + ghost_width, y + STEP, BACKGROUND_COLOR);
 			break;
 		case WEST:
-			lcd_filled_rectangle(x + ghost_width - STEP, y, x + ghost_width, y + ghost_height, LCD_BLACK);
+			lcd_filled_rectangle(x + ghost_width - STEP, y, x + ghost_width, y + ghost_height, BACKGROUND_COLOR);
 			break;
 		case EAST:
-			lcd_filled_rectangle(x, y, x + STEP, y + ghost_height, LCD_BLACK);
+			lcd_filled_rectangle(x, y, x + STEP, y + ghost_height, BACKGROUND_COLOR);
 			break;
 	}
 }

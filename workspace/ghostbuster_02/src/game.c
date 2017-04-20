@@ -53,11 +53,11 @@ void check_start(uint8_t joystick_pos) {
 void game_task(void *arg) {
 	while(1) {
 		while (!ball->active) {
-			lcd_print(65, 160, SMALLFONT, LCD_WHITE, LCD_BLACK, "Press joystick");
+			lcd_print(65, 160, SMALLFONT, FONT_COLOR, BACKGROUND_COLOR, "Press joystick");
 			joystick_handler(check_start, TRIGGER);
 			SLEEP(10);
 		}
-		lcd_print(65, 160, SMALLFONT, LCD_BLACK, LCD_BLACK, "Press joystick");
+		lcd_print(65, 160, SMALLFONT, BACKGROUND_COLOR, BACKGROUND_COLOR, "Press joystick");
 		xSemaphoreGive(sem_ball);
 		xSemaphoreTake(sem_game, portMAX_DELAY);
 	}

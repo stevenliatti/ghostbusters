@@ -133,7 +133,7 @@ void collision_ball_wall(void) {
  * 				of the ball is randomly changed.
  */
 void collision_ball_ghost(void) {
-	uint8_t collision_id = test_collision(0,object,1,5);
+	uint8_t collision_id = test_collision(0,object,1,GHOST_NB);
 	uint8_t random = rnd_32() % 2;
 	if (collision_id != 0 && object[collision_id].active) {
 		direction temp[4] = {NORTH, SOUTH, 0, 0};
@@ -179,12 +179,12 @@ void ball_task(void *arg) {
 		while(ball->active) {
 			int x = ball->x;
 			int y = ball->y;
-			lcd_filled_circle(ball->x, ball->y, ball->radius, LCD_WHITE);
+			lcd_filled_circle(ball->x, ball->y, ball->radius, BALL_COLOR);
 			collision_ball_wall();
 			collision_ball_ghost();
 			move_object(ball);
 			SLEEP(10);
-			lcd_filled_circle(x, y, ball->radius, LCD_BLACK);
+			lcd_filled_circle(x, y, ball->radius, BACKGROUND_COLOR);
 			if (down_collision(ball)) lost_ball();
 		}
 		xSemaphoreGive(sem_game);

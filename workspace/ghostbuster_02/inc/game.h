@@ -48,6 +48,8 @@
 
 #define FONT_COLOR			LCD_WHITE
 #define BACKGROUND_COLOR	LCD_BLACK
+#define BALL_COLOR			LCD_WHITE
+#define RACKET_COLOR		LCD_GREEN
 
 #define NO_COLLISION		0
 #define GHOST_NB 			5
@@ -56,7 +58,6 @@
 #define BALL_INIT_X			120
 #define BALL_INIT_Y			299
 
-#define RACKET_COLOR		LCD_GREEN
 #define RACKET_INIT_X		110	// racket initial x
 #define RACKET_INIT_Y		299	// racket initial y
 #define RACKET_WIDTH		30	// racket width
@@ -64,8 +65,8 @@
 
 #define SLEEP(mseconds)	vTaskDelay(mseconds / portTICK_RATE_MS)
 #define TASK_CREATE(function, name, args, priority) xTaskCreate(function, (signed portCHAR*)name, configMINIMAL_STACK_SIZE, args, priority, NULL)
-#define DISPLAY_MENU() 	menu(LCD_WHITE, LCD_BLACK)
-#define ERASE_MENU() 	menu(LCD_BLACK, LCD_BLACK)
+#define DISPLAY_MENU() 	menu(FONT_COLOR, BACKGROUND_COLOR)
+#define ERASE_MENU() 	menu(BACKGROUND_COLOR, BACKGROUND_COLOR)
 
 // global variables
 uint8_t lives;
