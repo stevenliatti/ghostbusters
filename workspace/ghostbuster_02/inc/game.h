@@ -64,6 +64,8 @@
 
 #define SLEEP(mseconds)	vTaskDelay(mseconds / portTICK_RATE_MS)
 #define TASK_CREATE(function, name, args, priority) xTaskCreate(function, (signed portCHAR*)name, configMINIMAL_STACK_SIZE, args, priority, NULL)
+#define DISPLAY_MENU() 	menu(LCD_WHITE, LCD_BLACK)
+#define ERASE_MENU() 	menu(LCD_BLACK, LCD_BLACK)
 
 // global variables
 uint8_t lives;
@@ -74,7 +76,7 @@ uint16_t ghost_width, ghost_height;
 ghost_t ghosts[GHOST_NB];
 xSemaphoreHandle sem_ball, sem_game;
 
-void menu(uint32_t color);
+void menu(uint32_t font_color, uint32_t background_color);
 void init_game(void);
 
 #endif /* _GAME_H_ */
