@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#sudo set_usbuart_perm ttyUSB0
+stty -F /dev/ttyUSB0 115200
+stty -F /dev/ttyUSB0 raw
+if [ -e uart_dat.bin ]; then
+    rm uart_dat.bin
+fi
+cat /dev/ttyUSB0 >data10_19Ghosts.bin
