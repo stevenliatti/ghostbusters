@@ -18,7 +18,7 @@
 int main(void) {
 	init_rnd32(100);
 	init_lcd();
-	clear_screen(BACKGROUND_COLOR);
+	clear_screen(LCD_BLACK);
 	init_game();
 	while(1);
 	return 1;

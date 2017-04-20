@@ -44,7 +44,7 @@ void move_racket(uint8_t pos) {
  */
 bool joystick_left_pressed(uint16_t last_x, uint16_t last_y) {
 	if (JoystickGetState(LEFT) && racket.x > 0) {
-		lcd_filled_rectangle(last_x + racket.width - STEP, last_y, last_x + racket.width, last_y + racket.height, BACKGROUND_COLOR);
+		lcd_filled_rectangle(last_x + racket.width - STEP, last_y, last_x + racket.width, last_y + racket.height, LCD_BLACK);
 		joystick_handler(move_racket, POLLING);
 		lcd_filled_rectangle(racket.x, racket.y, racket.x + STEP, racket.y + racket.height, RACKET_COLOR);
 		return true;
@@ -62,7 +62,7 @@ bool joystick_left_pressed(uint16_t last_x, uint16_t last_y) {
  */
 bool joystick_right_pressed(uint16_t last_x, uint16_t last_y) {
 	if (JoystickGetState(RIGHT) && racket.x + racket.width < LCD_MAX_WIDTH - 2) {
-		lcd_filled_rectangle(last_x, last_y, last_x + STEP, last_y + racket.height, BACKGROUND_COLOR);
+		lcd_filled_rectangle(last_x, last_y, last_x + STEP, last_y + racket.height, LCD_BLACK);
 		joystick_handler(move_racket, POLLING);
 		lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, RACKET_COLOR);
 		return true;

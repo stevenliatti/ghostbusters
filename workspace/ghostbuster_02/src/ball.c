@@ -142,7 +142,7 @@ void collision_ball_ghost(void) {
 		ball->dir = (temp[random] | temp[random + 2]);
 		object[collision_id].active = false;
 		score+=10;
-		menu(FONT_COLOR);
+		DISPLAY_MENU();
 	}
 }
 
@@ -154,7 +154,7 @@ void collision_ball_ghost(void) {
  */
 void lost_ball(void) {
 	lives--;
-	menu(FONT_COLOR);
+	DISPLAY_MENU();
 	init_ball();
 	ball->active = true;
 	if (lives == 0) {

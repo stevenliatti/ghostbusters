@@ -18,12 +18,12 @@
  *
  * @param 		mode   The color to apply
  */
-void menu(uint32_t color) {
+void menu(uint32_t font_color, uint32_t background_color) {
 	char lives_string[10], score_string[10];
 	sprintf(lives_string, "Lives : %d", lives);
 	sprintf(score_string, "Score : %d", score);
-	lcd_print(40, 305, SMALLFONT, color, BACKGROUND_COLOR, lives_string);
-	lcd_print(140, 305, SMALLFONT, color, BACKGROUND_COLOR, score_string);
+	lcd_print(40, 305, SMALLFONT, font_color, background_color, lives_string);
+	lcd_print(140, 305, SMALLFONT, font_color, background_color, score_string);
 }
 
 /**
@@ -34,11 +34,11 @@ void menu(uint32_t color) {
  */
 void check_start(uint8_t joystick_pos) {
 	if (joystick_pos == CENTER) {
-		menu(BACKGROUND_COLOR);
+		ERASE_MENU();
 		lives = LIVES_NB;
 		score = 0;
 		ball->active = true;
-		menu(FONT_COLOR);
+		DISPLAY_MENU();
 	}
 }
 
@@ -78,7 +78,7 @@ void init_game(void) {
 		printf("init_ghosts error");
 		while(1);
 	}
-	menu(FONT_COLOR);
+	DISPLAY_MENU();
 
 	TASK_CREATE(game_task, "Game Task", NULL, tskIDLE_PRIORITY + 1);
 	TASK_CREATE(ball_task, "Ball Task", NULL, tskIDLE_PRIORITY + 1);
