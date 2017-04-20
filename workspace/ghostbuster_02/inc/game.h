@@ -49,11 +49,11 @@
 #define FONT_COLOR			LCD_WHITE
 #define BACKGROUND_COLOR	LCD_BLACK
 #define BALL_COLOR			LCD_WHITE
-#define RACKET_COLOR		LCD_GREEN
+#define RACKET_COLOR		LCD_BLUE
 
 #define NO_COLLISION		0
 
-#define GHOST_NB 			5
+#define GHOST_NB 			18
 #define LIVES_NB			3
 #define BALL_RADIUS			3
 #define BALL_INIT_X			120
