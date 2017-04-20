@@ -13,12 +13,6 @@
 #ifndef _GHOSTS_H_
 #define _GHOSTS_H_
 
-#define GHOST_1 1
-#define GHOST_2 2
-#define GHOST_3 3
-#define GHOST_4 4
-#define GHOST_5 5
-
 #define Y_START 150
 
 /**

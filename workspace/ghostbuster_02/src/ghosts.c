@@ -218,7 +218,7 @@ bool ghost_down_collision(object_t *object) {
  * @param       object The ghost's id
  */
 void ghost_ghost_collision(uint8_t id) {
-	uint8_t collision_id = test_collision(id, object ,1 ,5);
+	uint8_t collision_id = test_collision(id, object, 1, GHOST_NB);
 	if (collision_id != 0 && object[collision_id].active) {
 		if (object[id].dir & (NORTH | SOUTH)) {
 			object[id].dir ^= NORTH | SOUTH;
