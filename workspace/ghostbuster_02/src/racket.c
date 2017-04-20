@@ -64,7 +64,7 @@ bool joystick_right_pressed(uint16_t last_x, uint16_t last_y) {
 	if (JoystickGetState(RIGHT) && racket.x + racket.width < LCD_MAX_WIDTH - 2) {
 		lcd_filled_rectangle(last_x, last_y, last_x + STEP, last_y + racket.height, BACKGROUND_COLOR);
 		joystick_handler(move_racket, POLLING);
-		lcd_filled_rectangle(racket.x + racket.width - STEP, racket.y, racket.x + racket.width, racket.y + racket.height, RACKET_COLOR);
+		lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, RACKET_COLOR);
 		return true;
 	}
 	return false;
