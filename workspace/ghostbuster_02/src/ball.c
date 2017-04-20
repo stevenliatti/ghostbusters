@@ -155,6 +155,7 @@ void collision_ball_ghost(void) {
 void lost_ball(void) {
 	lives--;
 	DISPLAY_MENU();
+	lcd_filled_rectangle(racket.x, racket.y, racket.x + racket.width, racket.y + racket.height, RACKET_COLOR);
 	init_ball();
 	ball->active = true;
 	if (lives == 0) {
