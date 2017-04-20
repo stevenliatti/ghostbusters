@@ -28,7 +28,7 @@ __DATA(RAM2) uint16_t *ghost_im_down[ARRAY_BMP_SIZE];
  * @return      The x coordinate
  */
 uint16_t ghost_x(uint8_t ghost_id) {
-	return 10 + ghost_id * 30;
+	return 10 + (ghost_id % 6) * 30;
 }
 
 /**
@@ -156,7 +156,8 @@ void animate(ghost_t *ghost) {
  */
 void init_ghost(uint8_t ghost_id) {
 	direction dir = direction_map[rand_direction()];
-	object[ghost_id] = init_object(ghost_x(ghost_id), Y_START, ghost_height, dir, true);
+	uint16_t y = ghost_y - 30 * (ghost_id / 6);
+	object[ghost_id] = init_object(ghost_x(ghost_id), y, ghost_height, dir, true);
 	uint8_t internal_id = ghost_id - 1;
 	ghosts[internal_id].id = ghost_id;
 	ghosts[internal_id].obj = &object[ghost_id];
@@ -170,8 +171,9 @@ void init_ghost(uint8_t ghost_id) {
  * @brief       Init all ghosts.
  */
 int init_ghosts() {
+	ghost_y = Y_START;
 	if (init_bmp_ghost() == -1) { return -1; }
-	int i;
+	uint8_t i;
 	for (i = 1; i <= GHOST_NB; ++i) { init_ghost(i); }
 	return 0;
 }

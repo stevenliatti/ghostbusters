@@ -52,7 +52,7 @@
 #define RACKET_COLOR		LCD_GREEN
 
 #define NO_COLLISION		0
-#define GHOST_NB 			6
+#define GHOST_NB 			10
 #define LIVES_NB			3
 #define BALL_RADIUS			3
 #define BALL_INIT_X			120
@@ -74,6 +74,7 @@ uint32_t score;
 object_t object[GHOST_NB+1];
 object_t *ball;
 uint16_t ghost_width, ghost_height;
+uint16_t ghost_y;
 ghost_t ghosts[GHOST_NB];
 xSemaphoreHandle sem_ball, sem_game;
 
