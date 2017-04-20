@@ -52,7 +52,8 @@
 #define RACKET_COLOR		LCD_GREEN
 
 #define NO_COLLISION		0
-#define GHOST_NB 			10
+
+#define GHOST_NB 			5
 #define LIVES_NB			3
 #define BALL_RADIUS			3
 #define BALL_INIT_X			120
