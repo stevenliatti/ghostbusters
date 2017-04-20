@@ -61,6 +61,17 @@ sémaphore qui sera débloqué lorsque le joueur aura perdu la balle 3 fois.
 
 \section{Limite du nombre de fantômes}
 %Tous les 3 ?
+Ralentissement du jeu avec un nombre de traces élevée. La fonction de récupération
+des traces n'est pas assez performante et le buffer prend un certain temps pour
+se vider.
+\newline
+Le jeu reste bloqué lors de plus de 21 tâches en parallèle. Nous pensons que cette
+limite vient de la mémoire alouée à FreeRTOS. AU delà de 21 tâches, on dépasse cette
+mémoire définie par la macro configTOTAL\_HEAP\_SIZE définie ici à 20 * 1024. En augmentant
+cette variable nous pouvons augmenter le nombre de fantomes jusqu'à la limite
+de la mémoire de la carte. La limite que nous avons atteint est de configTOTAL\_HEAP\_SIZE = 27 * 1024
+avec un nombre de tâches de 29 (sans compter VApplicationIdleHook). Au dessus nous
+avons un hardfault que nous pensons être due à un dépassement de mémoire de la carte.
 
 
 
