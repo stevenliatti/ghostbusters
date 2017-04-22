@@ -25,9 +25,6 @@ typedef struct {
 	uint16_t height;
 } racket_t;
 
-// racket instance
-racket_t racket;
-
 void init_racket();
 void racket_task(void *arg);
 

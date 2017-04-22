@@ -11,7 +11,6 @@
  */
 
 #include "game.h"
-#include "object.h"
 
 /**
  * @brief 		This function will initalize an object.

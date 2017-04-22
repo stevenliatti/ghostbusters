@@ -76,6 +76,7 @@ object_t object[GHOST_NB+1];
 object_t *ball;
 uint16_t ghost_width, ghost_height;
 ghost_t ghosts[GHOST_NB];
+racket_t racket;
 xSemaphoreHandle sem_ball, sem_game;
 
 void menu(uint32_t font_color, uint32_t background_color);
