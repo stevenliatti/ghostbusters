@@ -10,6 +10,7 @@
 \usemintedstyle{colorful}
 \setlength{\parindent}{0pt}
 \usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{caption}
 
 \begin{document}
 \maketitle
@@ -35,8 +36,10 @@ Toutes les spécifications du jeu demandées sont fonctionnelles, avec l'animati
 en bonus. Il n'y a pas de problèmes connus également.
 
 \section{Structure du programme}
-%Raed ?
-*faire un shéma bloc*
+\begin{center}
+\includegraphics[scale=0.6]{ghostbusters.png}
+\captionof{figure}{Schéma bloc du programme}
+\end{center}
 
 \section{Description des tâches}
 \subsection{Gestion du jeu}
@@ -91,7 +94,15 @@ est mis à jour en conséquences.
 
 \subsection{Gestion de la raquette}
 \inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=76,lastline=89]{C}{../workspace/ghostbuster_02/src/racket.c}
-%Raed ?
+La gestion de déplacament de la raquette est similaire à la gestion de déplacement de la balle. Par contre,
+elle est toujours active (d'où la boucle \mintinline{c}{while(1)}) avec une attente passive de 10 ms pour tester
+si le joystick est appuyé (vers la droite ou la gauche). Si c'est le cas, la raquette va être déplacé de STEP
+pixels chaque les 8 ms tant qu'on reste appuyer. On a rajouté une amélioration qui permet de ne pas déssiner
+la raquette à nouveau si l'utilisateur essaie de la bouger vers la droite et qu'elle arrive au coté droite
+(\mintinline{c}{x = LCD_MAX_WIDTH}), et respectivement à gauche si elle arrive au coté gauche (\mintinline{c}{x = 0}).
+\newline
+En ce qui concerne la gestion de collision avec la balle, cette dernière rebondit si elle arrive sur la raquette
+en haut, à gauche ou à droite.
 
 \section{Analyse des traces}
 %Orphée ?
