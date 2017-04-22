@@ -10,7 +10,7 @@
  * @version		1.0
  */
 
-#include "racket.h"
+#include "game.h"
 
 /**
  * @brief       Init the racket.

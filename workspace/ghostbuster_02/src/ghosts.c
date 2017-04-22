@@ -244,9 +244,7 @@ void collision_ghost_wall(ghost_t *ghost) {
  */
 void ghost_task(void *arg) {
 	ghost_t *ghost = (ghost_t*)arg;
-	uint8_t change_dir = 0;
-	uint8_t change_img = 0;
-	uint8_t random;
+	uint8_t change_dir = 0, change_img = 0, random;
 	uint16_t x, y;
 	while(1) {
 		while(ghost->obj->active) {
@@ -261,8 +259,8 @@ void ghost_task(void *arg) {
 			x = ghost->obj->x;
 			y = ghost->obj->y;
 			collision_ghost_ghost(ghost->id);
-			display_ghost(ghost);
 			collision_ghost_wall(ghost);
+			display_ghost(ghost);
 			move_object(ghost->obj);
 			SLEEP(ghost->speed);
 			if (ghost->obj->active) update_ghost(ghost, x, y);

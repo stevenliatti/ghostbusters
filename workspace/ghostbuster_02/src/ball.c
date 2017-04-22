@@ -11,7 +11,6 @@
  */
 
 #include "game.h"
-#include "ball.h"
 
 /**
  * @brief 		This function will initalize the ball object calling init_object.
