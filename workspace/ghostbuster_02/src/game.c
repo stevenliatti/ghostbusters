@@ -67,6 +67,7 @@ void game_task(void *arg) {
  * @brief 		This function will initialize all the variables and the tasks.
  */
 void init_game(void) {
+	uart0_init(115000);
 	lives = 0;
 	score = 0;
 	sem_ball = xSemaphoreCreateCounting(1, 0);
