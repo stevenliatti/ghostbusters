@@ -37,7 +37,6 @@ en bonus. Il n'y a pas de problèmes connus également.
 
 \section{Description des tâches}
 \subsection{Gestion du jeu}
-\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=53,lastline=64]{C}{../workspace/ghostbuster_02/src/game.c}
 Lorsque la partie commence, le joueur doit appuyer sur le joystick pour
 commencer le jeu et lancer la balle. C'est cette tâche qui s'occupe de la
 gestion de cette fonctionnalité. Pour détecter la pression du joystick, nous avons
@@ -49,7 +48,6 @@ sur lequel attendait la tâche de la balle puis attend lui-même sur un autre
 sémaphore qui sera débloqué lorsque le joueur aura perdu la balle 3 fois.
 
 \subsection{Gestion de la balle}
-\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=176,lastline=193]{C}{../workspace/ghostbuster_02/src/ball.c}
 Comme expliqué précedement, une fois que le joueur appuie sur le joystick, le sémaphore
 bloquant la tâche de la balle est débloqué et entre dans une boucle tant que
 la balle est "active" (c'est-à-dire que le joueur a encore des vies). Dans cette boucle
@@ -67,7 +65,6 @@ soit la balle refait la boucle, soit elle libère la tâche de gestion du jeu et
 rebloque elle-même dépendamment de si le joueur a perdu ou non.
 
 \subsection{Déplacement des fantômes}
-\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=245,lastline=275]{C}{../workspace/ghostbuster_02/src/ghosts.c}
 Chaque fantôme est défini par une structure \mintinline{c}{ghost_t} ayant un pointeur sur
 la case du tableau \mintinline{c}{object} ainsi qu'un pointeur sur l'image bmp, l'index de
 de l'image à afficher (voir plus loin) et sa vitesse. Tant qu'il n'est pas touché par la balle,
@@ -87,7 +84,6 @@ va vers le nord. Lorsqu'il y a un changement de direction, l'accès au bon table
 est mis à jour en conséquences.
 
 \subsection{Gestion de la raquette}
-\inputminted[breaklines,breaksymbol=,linenos,frame=single,stepnumber=5,tabsize=2,firstline=76,lastline=89]{C}{../workspace/ghostbuster_02/src/racket.c}
 La gestion de déplacament de la raquette est similaire à la gestion de déplacement de la balle. Par contre,
 elle est toujours active (d'où la boucle \mintinline{c}{while(1)}) avec une attente passive de 10 ms pour tester
 si le joystick est appuyé (vers la droite ou la gauche). Si c'est le cas, la raquette va être déplacée de STEP
