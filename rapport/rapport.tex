@@ -99,7 +99,21 @@ En ce qui concerne la gestion de collision avec la balle, cette dernière rebond
 en haut, à gauche ou à droite.
 
 \section{Analyse des traces}
-%Orphée ?
+\begin{center}
+\includegraphics[scale=0.455]{../traces/traces1.png}
+\captionof{figure}{Traces}
+\end{center}
+Pour rappel, l'ordre des tâches est le suivant : Game Task, Ball Task, Racket Task et les 5 Ghost Task.
+À 3012 ms, le joueur a lancé le jeu, on aperçoit que la Game Task qui affichait le message "Press joystick"
+s'arrête et laisse la place à la Ball Task. Le joystick est régulièrement vérifié dans la Racket Task et les
+5 fantômes gardent un rythme régulier jusqu'à 3200 ms environ, à la position du curseur sur l'image. On voit
+en effet qu'à 3189 ms, la Ball Task prend plus de temps, signe qu'il y a eu collision. On voit également que
+le 4ème fantôme (pénultième tâche) prend moins de temps à s'exécuter à partir de 3227 ms, c'est lui qui a été
+touché par la balle, il est devenu inactif. Les autres fantômes maintiennent leur durée d'exécution.
+\newline
+Nous voyons sur les traces que les durées des tâches sont maitrisées, il n'y a à aucun moment une ou plusieurs
+tâches qui prennent la main pendant un temps trop long relativement aux autres, leur durée reste constante en
+fonction du code exécuté.
 
 \section{Limite du nombre de fantômes}
 En augmentant le nombre de fantômes, nous pouvons observer un ralentissement du jeu.
