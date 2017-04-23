@@ -35,13 +35,19 @@ logique et mécanique du jeu uniquement, tout en sachant que cette partie temps 
 Toutes les spécifications du jeu demandées sont fonctionnelles, avec l'animation des fantômes
 en bonus. Il n'y a pas de problèmes connus également.
 
+\section{Structure du programme}
+\begin{center}
+\includegraphics[scale=0.6]{ghostbusters.png}
+\captionof{figure}{Schéma bloc du programme}
+\end{center}
+
 \section{Description des tâches}
 \subsection{Gestion du jeu}
 Lorsque la partie commence, le joueur doit appuyer sur le joystick pour
 commencer le jeu et lancer la balle. C'est cette tâche qui s'occupe de la
 gestion de cette fonctionnalité. Pour détecter la pression du joystick, nous avons
 été obligés de passer par une attente "semi-passive". La tâche va vérifier toutes
-les 10ms l'état du joystick puis se mettre en attente passive et laisser la main
+les 10 ms l'état du joystick puis se mettre en attente passive et laisser la main
 aux autres tâches. Lorsque le joystick est appuyé, la tâche initialise le nombre
 de vies ainsi que le score du joueur, sort de sa boucle, débloque le sémaphore
 sur lequel attendait la tâche de la balle puis attend lui-même sur un autre
@@ -55,7 +61,7 @@ la tâche va d'abord dessiner la balle (un cercle de rayon 3 ici). Elle va ensui
 s'il y a une collision avec les bords de l'écran, la raquette, ou un fantôme et si oui changer
 la direction de la balle en fonction. Les coordonées de la balle sont finalement
 incrémentées de STEP (ici STEP = 2) et la tâche se met en attente passive pendant
-10ms afin de donner la main.
+10 ms afin de donner la main.
 \newline
 Lorsque la tâche reprend la main, la balle est effacée en redessinant un cercle
 de la couleur de fond là où était la balle. Nous vérifions ensuite s'il y a collision
@@ -76,15 +82,16 @@ n'y a pas de collision avec la balle, il est dessiné à sa nouvelle position, s
 \newline
 Dans le cas ou le fantôme est inactif,
 toutes les 20 ms il a 1\% de chances de revenir dans le jeu. Tous les 100 cycles de vie d'un
-fantôme (relatif à sa vitesse), il change aléatoirement de direction entre le nord,
-le sud, l'est et l'ouest. Pour "animer" le fantôme, tous les 5 cycles (toujours relatif à sa
-vitesse), on alterne entre les deux images correspondantes à la direction actuelle du fantôme.
-Nous avons rajouté un jeu de deux images supplémentaire, simulant un fantôme de dos lorsqu'il
+fantôme (relatifs à sa vitesse), il change aléatoirement de direction entre le nord,
+le sud, l'est et l'ouest. Pour "animer" le fantôme, tous les 5 cycles (toujours relatifs à sa
+vitesse), on alterne entre les deux images correspondantes à la direction actuelle du fantôme
+(index de l'image à afficher).
+Nous avons rajouté un jeu de deux images, simulant un fantôme de dos lorsqu'il
 va vers le nord. Lorsqu'il y a un changement de direction, l'accès au bon tableau des images
-est mis à jour en conséquences.
+est mis à jour en conséquence.
 
 \subsection{Gestion de la raquette}
-La gestion de déplacament de la raquette est similaire à la gestion de déplacement de la balle. Par contre,
+La gestion de déplacement de la raquette est similaire à la gestion de déplacement de la balle. Par contre,
 elle est toujours active (d'où la boucle \mintinline{c}{while(1)}) avec une attente passive de 10 ms pour tester
 si le joystick est appuyé (vers la droite ou la gauche). Si c'est le cas, la raquette va être déplacée de STEP
 pixels tous les 8 ms tant qu'on maintient l'appui. On a rajouté une amélioration qui permet de ne pas dessiner
@@ -109,7 +116,7 @@ touché par la balle, il est devenu inactif. Les autres fantômes maintiennent l
 \newline
 Nous voyons sur les traces que les durées des tâches sont maitrisées, il n'y a à aucun moment une ou plusieurs
 tâches qui prennent la main pendant un temps trop long relativement aux autres, leur durée reste constante en
-fonction du code exécuté.
+fonction du code exécuté. Nous pouvons donc affirmer qu’il n’y a pas de dérive temporelle.
 
 \section{Limite du nombre de fantômes}
 En augmentant le nombre de fantômes, nous pouvons observer un ralentissement du jeu.
@@ -125,11 +132,5 @@ nombre de fantômes jusqu'à la limite de la mémoire de la carte. La limite que
 avons atteint est de \mintinline{c}{configTOTAL_HEAP_SIZE = 27 * 1024} avec un nombre de tâches
 de 29 (sans compter VApplicationIdleHook). Au-dessus nous avons un hardfault que
 nous pensons être du à un dépassement de mémoire de la carte.
-
-\section{Structure du programme}
-\begin{center}
-\includegraphics[scale=0.6]{ghostbusters.png}
-\captionof{figure}{Schéma bloc du programme}
-\end{center}
 
 \end{document}
