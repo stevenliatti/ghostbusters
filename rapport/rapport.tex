@@ -102,15 +102,19 @@ en haut, à gauche ou à droite.
 %Orphée ?
 
 \section{Limite du nombre de fantômes}
-Ralentissement du jeu avec un nombre de traces élevées. La fonction de récupération
-des traces n'est pas assez performante et le buffer prend un certain temps pour
-se vider. Le jeu reste bloqué lorsqu'il y a plus que 21 tâches en parallèle. Nous pensons que cette
-limite vient de la mémoire allouée à FreeRTOS. Au-delà de 21 tâches, on dépasse cette
-mémoire définie par la macro configTOTAL\_HEAP\_SIZE définie ici à 20 * 1024. En augmentant
-cette variable nous pouvons augmenter le nombre de fantômes jusqu'à la limite
-de la mémoire de la carte. La limite que nous avons atteint est de configTOTAL\_HEAP\_SIZE = 27 * 1024
-avec un nombre de tâches de 29 (sans compter VApplicationIdleHook). Au-dessus nous
-avons un hardfault que nous pensons être du à un dépassement de mémoire de la carte.
+En augmentant le nombre de fantômes, nous pouvons observer un ralentissement du jeu.
+Nous pouvons supposer que la fonction de récupération des traces n'est pas assez
+performante et le buffer prend un certain temps pour se vider ce qui cause un ralentissement
+général du jeu.
+\newline
+Nous avons remarqué aussi que le jeu reste bloqué lorsqu'il y a plus que 21 tâches
+en parallèle. Nous pensons que cette limite vient de la mémoire allouée à FreeRTOS.
+Au-delà de 21 tâches, on dépasse cette mémoire définie par la macro \mintinline{c}{configTOTAL_HEAP_SIZE}
+définie ici à \mintinline{c}{20 * 1024}. En augmentant cette variable nous pouvons augmenter le
+nombre de fantômes jusqu'à la limite de la mémoire de la carte. La limite que nous
+avons atteint est de \mintinline{c}{configTOTAL_HEAP_SIZE = 27 * 1024} avec un nombre de tâches
+de 29 (sans compter VApplicationIdleHook). Au-dessus nous avons un hardfault que
+nous pensons être du à un dépassement de mémoire de la carte.
 
 \section{Structure du programme}
 \begin{center}
