@@ -37,7 +37,7 @@ en bonus. Il n'y a pas de problèmes connus également.
 
 \section{Structure du programme}
 \begin{center}
-\includegraphics[scale=0.6]{ghostbusters.png}
+\includegraphics[scale=0.6]{images/ghostbusters.png}
 \captionof{figure}{Schéma bloc du programme}
 \end{center}
 
@@ -103,8 +103,8 @@ en haut, à gauche ou à droite.
 
 \section{Analyse des traces}
 \begin{center}
-\includegraphics[scale=0.455]{../traces/traces1.png}
-\captionof{figure}{Traces}
+\includegraphics[scale=0.455]{images/traces5.png}
+\captionof{figure}{Traces pour 5 fantômes avec précision de 1$\mu$s}
 \end{center}
 Pour rappel, l'ordre des tâches est le suivant : Game Task, Ball Task, Racket Task et les 5 Ghost Task.
 À 3012 ms, le joueur a lancé le jeu, on aperçoit que la Game Task qui affichait le message "Press joystick"
@@ -119,10 +119,17 @@ tâches qui prennent la main pendant un temps trop long relativement aux autres,
 fonction du code exécuté. Nous pouvons donc affirmer qu’il n’y a pas de dérive temporelle.
 
 \section{Limite du nombre de fantômes}
+\begin{center}
+\includegraphics[scale=0.455]{images/traces18.png}
+\captionof{figure}{Traces pour 18 fantômes avec précision de 1$\mu$s}
+\end{center}
 En augmentant le nombre de fantômes, nous pouvons observer un ralentissement du jeu.
 Nous pouvons supposer que la fonction de récupération des traces n'est pas assez
 performante et le buffer prend un certain temps pour se vider ce qui cause un ralentissement
-général du jeu.
+général du jeu. En effet, les traces nous montrent que, périodiquement, aucune de nos tâches n'a la main
+durant à peu près 30ms ce qui veut dire que c'est la tâche VApplicationIdleHook qui a la main
+et qui envoi les tâches dans l'UART. En comparaison, lorsque nous avons 5 fantômes,
+VApplicationIdleHook a la main durant approximativement 8ms.
 \newline
 Nous avons remarqué aussi que le jeu reste bloqué lorsqu'il y a plus que 21 tâches
 en parallèle. Nous pensons que cette limite vient de la mémoire allouée à FreeRTOS.
